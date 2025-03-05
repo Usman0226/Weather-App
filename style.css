@@ -20,3 +20,33 @@ header .temp{
     font-size: 6rem;
     align-self: center;
 }
+
+header .Info{
+    font-size: 1.5rem;
+}
+
+main{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ol{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+section{
+    
+    font-size: 3em;
+    
+}
+.Changes_In_Day{
+
+    padding: 20px;
+    background-color: red;
+    width: 60vw;
+    height: 30vh;
+}
