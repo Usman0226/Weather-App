@@ -1,0 +1,22 @@
+*{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+html,body{
+    width: 100vw;
+    height: 100vh;
+}
+
+header{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header .temp{
+    font-size: 6rem;
+    align-self: center;
+}
