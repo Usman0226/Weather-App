@@ -53,9 +53,10 @@ header .Info{
     border: 2px solid #1f1f3b;
     border-radius: 7px;
     text-align: center;
-    color: black;
+    background-color: #bac0cd;
     outline: none;
 }
+
 #search::placeholder {
     color: black;
 }
@@ -120,14 +121,6 @@ ol li {
 
 }
 <<<<<<< HEAD
-.T{
-    display: flex;
-    mix-blend-mode:color-burn;
-    height: 15%;
-    margin-top: 6%;
-    margin-bottom: 16px;
-    object-fit:scale-down;
-}
 #weekly{
     /* display: flex;
     text-align: center; */
