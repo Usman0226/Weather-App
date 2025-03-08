@@ -11,6 +11,7 @@
     --snowy: #e3f2fd;
     --Foggy: #9e9e9e;
 }
+
 *{
 box-sizing: border-box;
 margin: 0;
@@ -43,8 +44,23 @@ header .temp{
 header .Info{
     font-size: 1.5rem;
 }
-
+#search{
+    width: 80%;
+    max-width: 400px;
+    height: 40px;
+    font-size: 18px;
+    padding: 10px; 
+    border: 2px solid #1f1f3b;
+    border-radius: 7px;
+    text-align: center;
+    color: black;
+    outline: none;
+}
+#search::placeholder {
+    color: black;
+}
 main{
+    flex-direction: column;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -103,10 +119,83 @@ ol li {
     border-radius: 25px;
 
 }
+<<<<<<< HEAD
+.T{
+    display: flex;
+    mix-blend-mode:color-burn;
+    height: 15%;
+    margin-top: 6%;
+    margin-bottom: 16px;
+    object-fit:scale-down;
+}
+#weekly{
+    /* display: flex;
+    text-align: center; */
+    width: 80%;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--Night);
+    border-radius: 25px;
+}
+.main {
+    /* display: flex;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    border: 1px solid #1f1f3b;
+    gap: 10px;
+    padding: 20px;
+    height: auto;
+    background-color: #f4f4f4; */
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    border: 1px solid #1f1f3b;
+    gap: 10px;
+    padding: 20px;
+    height: auto;
+    justify-content: center;
+=======
 .Changes_In_Day p {
     margin: 0;
     padding-left: 20px;
     font-size: .52em;
     font-weight: 600;
+>>>>>>> da850ed734aefe0967ae736d74ba391a083521b1
 }
 
+.sub {
+    margin: 5px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    border-radius: 10px;
+    border: 2px solid #1f1f3b;
+    background: linear-gradient(to right, #1e3a5f, #22426c);
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.sub h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.sub b {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.sub p {
+    font-size: 14px;
+    font-weight: bold;
+}
