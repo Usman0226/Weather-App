@@ -3,6 +3,7 @@
     --day: #4a90e2;
     --Night: #1e3a5f;
     --txt1:#f5f5f5d2;
+    --txt2:#f5f5f5d2;
     --sunny:#fdb813;
     --cloudy :#b0bec5;
     --rainy: #4a90e2;
@@ -31,7 +32,7 @@ header{
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    font-size: 1.6rem;
+    font-size: 1.6em;
 }
 
 header .temp{
@@ -48,6 +49,7 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 ol{
@@ -59,10 +61,9 @@ ol{
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     white-space: nowrap;
-    gap: 25px;
+    gap: 15px;
     top:15%;
     bottom:25%;
-
 }
 
 ol::-webkit-scrollbar{
@@ -79,6 +80,9 @@ div li{
     padding : 10px;
     align-self: center;
 }
+ol li {
+    scroll-snap-align: center;
+}
 
 .Time{
     align-items: center;
@@ -94,13 +98,15 @@ div li{
     min-width: 350px;
     max-width: 800px;
     width: 80%;
-    height: 30vh;
+    height: 25vh;
     border: .2px;
     border-radius: 25px;
-    p{
-        margin: 0;
-        padding-left: 20px;
-        font-size: .62em;}
 
+}
+.Changes_In_Day p {
+    margin: 0;
+    padding-left: 20px;
+    font-size: .52em;
+    font-weight: 600;
 }
 
