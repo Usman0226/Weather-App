@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/62301ddb39.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <!-- Things to add
     1.Location 
@@ -14,17 +16,23 @@
     3.weather Info like cloudy / Rainy
     4.List of weather changes in a day (horizontal scroll)
     5. -->
-   <header>
-        <input type="search" id="search" placeholder="Search">
-       <h1> Madanapalle</h1>
-       <div class="temp">
-         37&deg;
-       </div>
-       <div class="Info">
-        Partly Sunny
-       </div>
-   </header>
-   <main>
+    <header>
+
+        <div class="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="search" placeholder="Search">
+        </div>
+
+        <h1> Madanapalle</h1>
+        <div class="temp">
+            37&deg;
+        </div>
+        <div class="Info">
+            Partly Sunny
+        </div>
+
+    </header>
+    <main>
         <div class="Changes_In_Day">
             <p>TODAY'S FORECAST</p>
             <ol>
@@ -36,73 +44,56 @@
                     </div>
                 </li>
                 <li>
-                    
+
                     <div class="Time" id="12PM">
                         <h5 class="Top">12PM</h5>
                         <i class="fa-solid fa-sun"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
-                
+
                 <li>
                     <div class="Time" id="1PM">
                         <h5 class="Top">1PM</h5>
                         <i class="fa-solid fa-cloud-bolt"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
                     <div class="Time" id="2PM">
                         <h5 class="Top">2PM</h5>
                         <i class="fa-solid fa-wind"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
                     <div class="Time" id="3PM">
                         <h5 class="Top">3PM</h5>
                         <i class="fa-solid fa-poo-storm"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
                     <div class="Time" id="4PM">
                         <h5 class="Top">4PM</h5>
                         <i class="fa-solid fa-temperature-low"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
                     <div class="Time" id="5PM">
                         <h5 class="Top">5PM</h5>
                         <i class="fa-solid fa-cloud-sun"></i>
-                         <h5 class="bottom">36&deg;</h5>
+                        <h5 class="bottom">36&deg;</h5>
                     </div>
                 </li>
             </ol>
         </div>
-        <div class="wind-container">
-            <div class="wind-title"> WIND <i class="fa-solid fa-wind"></i></div>       
-            <div class="wind-info">
-                <p>Wind <span id="windSpeed">5 kph</span></p>
-                <p>Gusts <span id="windGusts">21 kph</span></p>
-                <p>Direction <span id="windDirection">60° ENE</span></p>
-            </div>
-    
-            <div class="compass">
-                <span class="east">E</span>
-                <span class="west">W</span>
-                <div class="arrow" id="windArrow"></div>
-            </div>
-        </div>
+
         <div class="Weekly">
-            <p>Weekly Forecast</p>
+            <p id="heading">WEEKLY FORECAST</p>
             <div class="main">
-                <div class="sub">
-                    <h3>Saturday</h3>
-                    <b>Partly Cloudy</b>
-                    <p>17&deg;/26&deg;</p>
-                </div>
+
                 <div class="sub">
                     <h3>Sunday</h3>
                     <b>Sunny</b>
@@ -133,7 +124,46 @@
                     <b>Partly Cloudy</b>
                     <p>20&deg;/26&deg;</p>
                 </div>
+                <div class="sub">
+                    <h3>Saturday</h3>
+                    <b>Partly Cloudy</b>
+                    <p>17&deg;/26&deg;</p>
+                </div>
             </div>
         </div>
+
+        <div class="wind">
+            <div class="details">
+                <p 
+                style=
+                "padding-bottom: 9px;
+                margin-bottom:9px;"
+                ><i class="fa-solid fa-wind"></i> WIND</p>
+                <section>
+                    <h5>WIND SPEED</h5>
+                    <h5>14 kph</h5>
+                </section>
+                <section>
+                    <h5>GUSTS</h5>
+                    <h5>28 kph</h5>
+                </section>
+                <section>
+                    <h5>DIRECTION</h5>
+                    <h5>109&deg; ESE</h5>
+                </section>
+            </div>
+            <div class="air">
+                <p>AIR QUALITY</p>
+                <div class="airsec">
+                    <h3>83</h3>
+                    <p >Satisfactory</p>
+                    <input type="range" min="0" max="100" value="50" id="slider">
+                    <p>Air quality index is 83, which is similar to yesterday at this time</p>
+                 </div>
+            </div>
+        </div>
+
+    </main>
 </body>
+
 </html>
