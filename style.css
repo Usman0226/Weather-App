@@ -38,6 +38,9 @@ header {
     font-size: 1.6em;
 }
 
+h1{
+    margin-top: 20px;
+}
 header .temp {
     font-size: 5rem;
     align-self: center;
@@ -129,10 +132,10 @@ ol li {
 .main {
     display: flex;
     white-space: nowrap;
-    justify-content: center;
+    justify-content: flex-start;
     min-width: 350px;
-    max-width: 800px;
-    width: 100%;
+    max-width: 790px;
+    width: 80vw;
     height: auto;
     overflow-x: auto;
     scroll-snap-align: start;
@@ -166,6 +169,7 @@ ol li {
     border-radius: 20px;
     border: 2px solid #1f1f3b;
     background: linear-gradient(to right, #1e3a5f, #22426c);
+    scroll-snap-align: start;
     padding: 15px;
     font-size: 16px;
     line-height: 1.5;
@@ -198,7 +202,7 @@ ol li {
 /* search Bar */
 
 #search {
-    width: 40vw;
+    width: 55vw;
     height: inherit;
     background: inherit;
     align-self: center;
@@ -221,8 +225,8 @@ ol li {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40vw;
-    height: 2rem;
+    width: 55vw;
+    height: 2.5rem;
     padding: 5px 10px;
     background-color: var(--cloudy);
     border-radius: 25px;
@@ -242,18 +246,20 @@ ol li {
 
 .wind {
     display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
     min-width: 350px;
     max-width: 800px;
     width: 80%;
     height: auto;
     gap: 20px;
-    /* background-color: var(--cloudy); */
 }
 
 .details{
     display: flex;
+    flex: 1 1 150px;
     flex-direction: column;
-    min-width: 350px;
+    min-width: 200px;
     max-width: 800px;
     width: 50%;
     height: 200px;
@@ -273,13 +279,19 @@ section h5{
     font-size: .42em;
 }
 .air{
+    flex: 1 1 150px;
     width: 50%;
+    min-width: 200px;
+    /* min-width: 250px; */
     height: 200px;
     background-color: var(--Night);
     border-radius: 25px;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
+.airsec{
+    padding-left: 15px;
+}
 .air p{
     margin: 0;
     font-size: 1rem;
@@ -287,13 +299,20 @@ section h5{
     color: var(--txt2);
     overflow-wrap: break-word;  
 }
+
+.air #head{
+    padding: 20px 0 0 20px;
+}
+
 .air #slider{
-    width: 100%;
+    width: 95%;
     height: 5%;
 }
 
 .airsec{
+    gap: 0;
     padding-left: 25px  ;
+    font-size: .52em;
 }
 
 /* range */
@@ -325,7 +344,7 @@ section h5{
   }
 
   #slider::-moz-range-thumb {
-    width: 25px;
+    width: 1px;
     height: 2px;
     border-radius: 50%;
     background: #000;
@@ -336,3 +355,4 @@ section h5{
   #slider{
     margin-top:10px;
   }
+
