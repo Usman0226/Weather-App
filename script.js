@@ -37,6 +37,11 @@ const getweather = async (city) => {
   let finalData = await data.json(); //into JSON format
   console.log(finalData);
   console.log(finalData.main.temp);
+
+  const lat = finalData.coord.lat;
+  const lon = finalData.coord.lon;
+
+  getAQIndex(lat,lon);
   hourlyForecast(city);
   updateWeather(finalData);
 };
@@ -45,57 +50,38 @@ const updateWeather = (data) => {
   document.querySelector("h1").innerText = data.name;
   document.querySelector(".temp").innerHTML =
     Math.round(data.main.temp) + "&deg";
-  document.querySelector('.bottom').innerHTML =  Math.round(data.main.temp) + "&deg";
+  document.querySelector(".bottom").innerHTML =
+    Math.round(data.main.temp) + "&deg";
   document.querySelector(".Info").innerText = data.weather[0].description;
   document.querySelector("#windspeed").innerText = data.wind.speed + " kmph";
   document.querySelector("#gust").innerText = data.wind.gust;
   document.querySelector("#dir").innerHTML = data.wind.deg + "&deg";
 
-  UpdateIcon(data);
+  UpdateIcon(data,"Now");
 };
 
-const UpdateIcon = (data) => {
-  const date = new Date();
-  const timelabel = date.toLocaleTimeString([], {
-    hour: "numeric",
-    hour12: true,
-  });
-  const tmLab = timelabel.replace(/\s/g, ""); // removing the space
-  console.log(tmLab);
-
+const UpdateIcon = (data, timelabel) => {
   const weatherCondition = data.weather[0].main;
   console.log(weatherCondition);
 
   const values = Object.keys(Icons); //Turns the object data vlaue's keywords into an array
-  console.log(values); 
+  console.log(values);
 
-  values.forEach((val) => {
-    // accessing the array values
-    if (Icons[weatherCondition]) {
-      document.querySelector("#Icon-Now").className =
-        "fa-solid " + Icons[weatherCondition];
-    }
-    console.log(val);// Prints the entire array
-  });
-
-  //   const check = Icons[weatherCondition];
+  // values.forEach((val) => {
+  //   const element = document.getElementById(`Icon-${timelabel}`);
+  //   // accessing the array values
   //   if (Icons[weatherCondition]) {
-  //     document.querySelector("#Icon-Now").className =
-  //       "fa-solid " + Icons[weatherCondition];
+  //     element.className = "fa-solid " + Icons[weatherCondition];
   //   }
+  //   console.log(val);// Prints the entire array
+  // });
+
+  const element = document.getElementById(`Icon-${timelabel}`);
+  // accessing the array values
+  if (Icons[weatherCondition] && element) {
+    element.className = "fa-solid " + Icons[weatherCondition];
+  }
 };
-
-// const values = Object.keys(Icons); //Turns the object data vlaues keywords into an array
-// console.log(values); // Prints the entire array
-
-// values.forEach((val) => {
-//   // accessing the array values
-//   if (weatherCondition == val) {
-//     document.querySelector("#Icon-Now").className =
-//       "fa-solid " + Icons[weatherCondition];
-//   }
-//   console.log(val);
-// });
 
 // To fill the HourForeCastData Object
 const hourlyForecast = async (city) => {
@@ -119,38 +105,47 @@ const hourlyForecast = async (city) => {
     let date_unix = el.dt * 1000; // to ms (JS date) => Date from the list
     let dateobject = new Date(date_unix); // to get the date from the API'S data
     const DD = dateobject.getDate();
-    const tmLab = dateobject.toLocaleTimeString([], {  // from date to time 
-      hour: "numeric", 
-      hour12: true, 
+    const tmLab = dateobject.toLocaleTimeString([], {
+      // from date to time
+      hour: "numeric",
+      hour12: true,
     });
-    const timelabel = tmLab.replace(/\s/g, "");//remvoing space 
+    const timelabel = tmLab.replace(/\s/g, ""); //remvoing space
     console.log(DD);
 
-    if (date == DD) {
+    if (date == DD || date+1 == DD) {
       hourForeCastData[timelabel] = {
         temp: temp,
         icon: condition,
       };
-    }
-    
-    const element = document.getElementById(timelabel);
-    if(element){
-          element.innerHTML = Math.round(hourForeCastData[timelabel].temp) + '&deg';
-          
-    }
 
+      const element = document.getElementById(timelabel);
+      if (element) {
+        element.innerHTML =
+          Math.round(hourForeCastData[timelabel].temp) + "&deg";
+        UpdateIcon(el, timelabel);
+      }
+    }
   });
 
   console.log(hourForeCastData);
 
-  
   const hourdatakeys = Object.keys(hourForeCastData);
-  hourdatakeys.forEach((val) =>{
+  hourdatakeys.forEach((val) => {
     console.log(val);
   });
-
-  
 };
+
+
+const getAQIndex = async (lat,lon) =>{ 
+    const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
+    const response = await fetch(url);
+    const AQIndex = await response.json();
+    console.log(AQIndex);
+
+    const aqi = AQIndex.list[0].main.aqi;
+    document.getElementById('aqi').innerHTML = aqi;
+}
 
 // const weeklyForeCast = async (city) => {
 //    const url = `https://api.openweathermap.org/data/2.5/weekforecast?q=${city}&appid=${API_key}&units=metric`;
@@ -161,12 +156,10 @@ const hourlyForecast = async (city) => {
 
 // }
 
-
-// 2AM
-// script.js:139 5AM
-// script.js:139 8AM
-// script.js:139 11AM
-// script.js:139 2PM
-// script.js:139 5PM
-// script.js:139 8PM
-// script.js:139 11PM
+// const date = new Date();
+// const timelabel = date.toLocaleTimeString([], {
+//   hour: "numeric",
+//   hour12: true,
+// });
+// const tmLab = timelabel.replace(/\s/g, ""); // removing the space
+// console.log(tmLab);
