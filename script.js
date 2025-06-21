@@ -1,7 +1,6 @@
 const search = document.getElementById("search");
 const API_key = "888c6f6d1a152bfd3be977d295ab111f";
 
-const hourForeCastData = {};
 const Icons = {
   Clear: "fa-sun",
   Clouds: "fa-cloud",
@@ -18,6 +17,13 @@ const Icons = {
   Ash: "fa-smog",
   Squall: "fa-wind",
   Tornado: "fa-poo-storm",
+};
+const levels = {
+  1: "Good 🌿",
+  2: "Fair 🌤️",
+  3: "Moderate ",
+  4: "Poor ",
+  5: "Very Poor ",
 };
 
 search.addEventListener("keydown", (e) => {
@@ -41,7 +47,7 @@ const getweather = async (city) => {
   const lat = finalData.coord.lat;
   const lon = finalData.coord.lon;
 
-  getAQIndex(lat,lon);
+  getAQIndex(lat, lon);
   hourlyForecast(city);
   updateWeather(finalData);
 };
@@ -57,7 +63,7 @@ const updateWeather = (data) => {
   document.querySelector("#gust").innerText = data.wind.gust;
   document.querySelector("#dir").innerHTML = data.wind.deg + "&deg";
 
-  UpdateIcon(data,"Now");
+  UpdateIcon(data, "Now");
 };
 
 const UpdateIcon = (data, timelabel) => {
@@ -65,7 +71,7 @@ const UpdateIcon = (data, timelabel) => {
   console.log(weatherCondition);
 
   const values = Object.keys(Icons); //Turns the object data vlaue's keywords into an array
-  console.log(values);
+  // console.log(values);
 
   // values.forEach((val) => {
   //   const element = document.getElementById(`Icon-${timelabel}`);
@@ -86,6 +92,8 @@ const UpdateIcon = (data, timelabel) => {
 // To fill the HourForeCastData Object
 const hourlyForecast = async (city) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_key}&units=metric`;
+  const hourForeCastData = {};
+  const weeklyData = {};
 
   const today = new Date();
   const date = today.getDate();
@@ -113,7 +121,7 @@ const hourlyForecast = async (city) => {
     const timelabel = tmLab.replace(/\s/g, ""); //remvoing space
     console.log(DD);
 
-    if (date == DD || date+1 == DD) {
+    if (date == DD || date + 1 == DD) {
       hourForeCastData[timelabel] = {
         temp: temp,
         icon: condition,
@@ -127,25 +135,44 @@ const hourlyForecast = async (city) => {
       }
     }
   });
+  
 
-  console.log(hourForeCastData);
+  const weekList = hourForecast.list;
+  for(let i = 4 ; i <=weekList.length ; i += 8 ){
+    //day extraction 
+      const dt = weekList[i].dt;
+      const weekdate =new Date(dt*1000) ;
+      const day = weekdate.toLocaleDateString([],{
+        weekday :'long'
+      })
+      console.log(day);
 
-  const hourdatakeys = Object.keys(hourForeCastData);
-  hourdatakeys.forEach((val) => {
-    console.log(val);
-  });
+      const weekday_max_temp = weekList[i].main.temp_max;
+      const weekday_min_temp = weekList[i].main.temp_min;
+      const weatherCondition = weekList[i].weather[0].description;
+
+      weeklyData[day] = {
+          maxtemp : weekday_max_temp,
+          mintemp : weekday_min_temp,
+          condition : weatherCondition,
+      }
+
+  }
+
 };
 
+const getAQIndex = async (lat, lon) => {
+  const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
+  const response = await fetch(url);
+  const AQIndex = await response.json();
+  console.log(AQIndex);
 
-const getAQIndex = async (lat,lon) =>{ 
-    const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_key}`;
-    const response = await fetch(url);
-    const AQIndex = await response.json();
-    console.log(AQIndex);
-
-    const aqi = AQIndex.list[0].main.aqi;
-    document.getElementById('aqi').innerHTML = aqi;
-}
+  const aqi = AQIndex.list[0].main.aqi;
+  document.getElementById("aqi").innerHTML = aqi;
+  if (levels[aqi]) {
+    document.querySelector("#aqilabel").innerHTML = levels[aqi];
+  }
+};
 
 // const weeklyForeCast = async (city) => {
 //    const url = `https://api.openweathermap.org/data/2.5/weekforecast?q=${city}&appid=${API_key}&units=metric`;
