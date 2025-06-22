@@ -8,15 +8,10 @@ A fully self-built weather forecasting web app that shows:
 - 📆 Weekly forecast (5 days)
 - 💨 Air Quality Index (AQI)
 
-> 🔧 Built entirely through self-written logic — no code copied, no templates used. Pure logic, learning, and problem-solving.
+> 🔧 Built entirely through self-written logic 
 
 ---
 
-## 🔗 Live Demo
-
-Coming soon — deploy to GitHub Pages or Netlify.
-
----
 
 ## 🛠️ Technologies Used
 
@@ -200,8 +195,4 @@ weeklyData = {
 ---
 
 ## 📸 Screenshots
-
-*(Optional: Add some screenshots or a demo GIF)*
-
----
-![alt text](image.png)
+![alt text](Assets/screenshot.png)
