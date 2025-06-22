@@ -92,6 +92,7 @@ const UpdateIcon = (data, timelabel) => {
 // To fill the HourForeCastData Object
 const hourlyForecast = async (city) => {
   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_key}&units=metric`;
+
   const hourForeCastData = {};
   const weeklyData = {};
 
@@ -135,30 +136,37 @@ const hourlyForecast = async (city) => {
       }
     }
   });
-  
 
-  const weekList = hourForecast.list;
-  for(let i = 4 ; i <=weekList.length ; i += 8 ){
-    //day extraction 
-      const dt = weekList[i].dt;
-      const weekdate =new Date(dt*1000) ;
-      const day = weekdate.toLocaleDateString([],{
-        weekday :'long'
-      })
-      console.log(day);
+  //Weekly Forecast Data fill-up
+  const weekList = hourForecast.list; //weekList => array of the list
+  for (let i = 4; i <= weekList.length; i += 8) {
+    //day extraction
+    const dt = weekList[i].dt;
+    const weekdate = new Date(dt * 1000);
+    const day = weekdate.toLocaleDateString([], {
+      weekday: "long",
+    });
+    console.log(day);
 
-      const weekday_max_temp = weekList[i].main.temp_max;
-      const weekday_min_temp = weekList[i].main.temp_min;
-      const weatherCondition = weekList[i].weather[0].description;
+    const weekday_max_temp = weekList[i].main.temp_max;
+    const weekday_min_temp = weekList[i].main.temp_min;
+    const weatherCondition = weekList[i].weather[0].description;
 
-      weeklyData[day] = {
-          maxtemp : weekday_max_temp,
-          mintemp : weekday_min_temp,
-          condition : weatherCondition,
-      }
+    weeklyData[day] = {
+      maxtemp: weekday_max_temp,
+      mintemp: weekday_min_temp,
+      condition: weatherCondition,
+    };
 
+    //updating the UI
+    const weekelement = document.getElementById(day);
+    if (weeklyData[day] && weekelement) {
+      document.getElementById(`${day}-temp`).innerHTML = Math.round(weeklyData[day].maxtemp) + "°/" + Math.round(weeklyData[day].mintemp) + "°";
+      document.getElementById(`${day}-condition`).innerHTML = weeklyData[day].condition;
+    }
+    console.log(weeklyData[day]);
   }
-
+  console.log(weeklyData);
 };
 
 const getAQIndex = async (lat, lon) => {
@@ -172,21 +180,11 @@ const getAQIndex = async (lat, lon) => {
   if (levels[aqi]) {
     document.querySelector("#aqilabel").innerHTML = levels[aqi];
   }
+
+  UpdateProgressbar(aqi);
 };
 
-// const weeklyForeCast = async (city) => {
-//    const url = `https://api.openweathermap.org/data/2.5/weekforecast?q=${city}&appid=${API_key}&units=metric`;
-
-//    const response = await fetch(url);
-//    const weekData = response.json();
-//    console.log(weekData);
-
-// }
-
-// const date = new Date();
-// const timelabel = date.toLocaleTimeString([], {
-//   hour: "numeric",
-//   hour12: true,
-// });
-// const tmLab = timelabel.replace(/\s/g, ""); // removing the space
-// console.log(tmLab);
+function UpdateProgressbar(val){
+    const slidebar = document.querySelector('#slider');
+    slidebar.value = val;
+}

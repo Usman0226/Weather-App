@@ -1,59 +1,207 @@
-# Weather App
 
-## Step 1: Set Up the Project
-1. Create a new repository on GitHub for the project.
-2. Clone the repository to your local machine.
+# 🌤️ Weather Forecast App
 
-## Step 2: Initialize the Project
-Create the following project structure:
+A fully self-built weather forecasting web app that shows:
+
+- ✅ Current weather
+- 🕐 Hourly forecast (today & tomorrow)
+- 📆 Weekly forecast (5 days)
+- 💨 Air Quality Index (AQI)
+
+> 🔧 Built entirely through self-written logic — no code copied, no templates used. Pure logic, learning, and problem-solving.
+
+---
+
+## 🔗 Live Demo
+
+Coming soon — deploy to GitHub Pages or Netlify.
+
+---
+
+## 🛠️ Technologies Used
+
+- **HTML5 + CSS3**
+- **Vanilla JavaScript (no frameworks)**
+- **[OpenWeatherMap API](https://openweathermap.org/api)**:
+  - Current weather
+  - 5-day / 3-hour forecast
+  - Air pollution (AQI)
+- **Font Awesome** for weather icons
+
+---
+
+## 📈 Features
+
+- 🔍 City-based weather search
+- 🌡️ Temperature, weather condition, and wind stats
+- 🕐 Hourly forecast blocks with live icons
+- 📆 Weekly forecast using parsed daily data
+- 💨 Real-time AQI with emoji-based severity label
+
+---
+
+## 📦 Data Flow (ASCII Diagram)
+
+```
+User Input (Search bar)
+        │
+        ▼
+ getweather(city)  ←────── Enter key
+        │
+        ├─► updateWeather(data) ──► DOM: city, temp, wind, description
+        │
+        ├─► UpdateIcon(data, "Now") ──► sets icon based on weather condition
+        │
+        ├─► getAQIndex(lat, lon) ──► fetches & displays AQI
+        │
+        └─► hourlyForecast(city)
+               ├─► hourForeCastData { "2PM": { temp, icon }, ... }
+               └─► weeklyData {
+                      Monday:  { maxtemp, mintemp, condition },
+                      Tuesday: { ... },
+                    }
+```
+
+---
+
+## 📂 Core Function Breakdown
+
+### 🔹 `getweather(city)`
+- Fetches current weather data
+- Extracts `lat`, `lon`
+- Calls:
+  - `updateWeather()`
+  - `getAQIndex()`
+  - `hourlyForecast()`
+
+---
+
+### 🔹 `updateWeather(data)`
+- Updates DOM:
+  - `h1`: city name
+  - `.temp`: current temperature
+  - `.Info`: condition description
+  - Wind speed, gust, direction
+- Calls `UpdateIcon(data, "Now")`
+
+---
+
+### 🔹 `UpdateIcon(data, timelabel)`
+- Matches `data.weather[0].main` to icon from this object:
+```js
+Icons = {
+  Clear: "fa-sun",
+  Rain: "fa-cloud-showers-heavy",
+  ...
+};
+```
+- Applies icon to `#Icon-${timelabel}` element
+
+---
+
+### 🔹 `getAQIndex(lat, lon)`
+- Calls:
+  ```
+  https://api.openweathermap.org/data/2.5/air_pollution
+  ```
+- Extracts AQI value (1–5)
+- Maps to:
+```js
+levels = {
+  1: "Good 🌿", 2: "Fair 🌤️", ...
+};
+```
+
+---
+
+### 🔹 `hourlyForecast(city)`
+- Calls:
+  ```
+  /data/2.5/forecast?q=${city}
+  ```
+- For each item:
+  - Converts UNIX → `Date` → time label
+  - Stores in `hourForeCastData`:
+  ```js
+  {
+    "2PM": { temp: 34, icon: "Clouds" },
+    ...
+  }
+  ```
+  - Updates UI if corresponding time block exists in the respective Object !
+
+---
+
+### 🔹 Weekly Forecast Logic
+- Picks 1 timestamp per day (midpoint logic: `i += 8`)
+- Converts date to weekday name:
+  ```js
+  toLocaleDateString({ weekday: "long" })
+  ```
+- Stores in `weeklyData`:
+```js
+{
+  Monday: { maxtemp, mintemp, condition },
+  ...
+}
+```
+- Updates UI blocks like:
+  - `#Monday-temp`
+  - `#Monday-condition`
+
+---
+
+## 🧠 Data Structures
+
+### 🕐 Hourly Forecast:
+```js
+hourForeCastData = {
+  "2PM": { temp: 34, icon: "Clouds" },
+  "5PM": { temp: 32, icon: "Rain" }
+}
+```
+
+### 📆 Weekly Forecast:
+```js
+weeklyData = {
+  Monday:  { maxtemp: 34, mintemp: 26, condition: "clear sky" },
+  Tuesday: { ... }
+}
+```
+
+---
+
+## 💡 Developer Highlights
+
+- ⌨️ DOM input handling with `keydown` and `.value`
+- 🌐 Multiple asynchronous API calls
+- 📦 JSON parsing & dynamic data mapping
+- 🕓 Date/Time formatting & conversion
+- 🎨 Dynamic icon rendering
+- 🔄 Full data-to-UI pipeline built from scratch
 
 
-## Step 3: Assign Tasks
+## 📥 How to Use
 
-### Team Member: HTML and Basic Structure
-- Task 1: Create the initial `index.html` file with the basic structure.
-- Task 2: Add the necessary HTML elements for the weather app interface.
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/your-username/weather-app.git
+   ```
 
-### Team Member: CSS Styling
-- Task 1: Create the initial `style.css` file with basic styling.
-- Task 2: Style the HTML elements added by Team Member 1.
+2. Add your API key to the JS file:
+   ```js
+   const API_key = 'YOUR_API_KEY'; (Get your API_key from OpenWeather webpage)
+   ```
 
-### Team Member: JavaScript Functionality
-- Task 1: Create the initial `script.js` file with basic functionality.
-- Task 2: Implement the weather fetching functionality using the OpenWeatherMap API.
+3. Open `index.html` in your browser.
 
-## Step 4: Collaboration and Integration
+4. Type any city and hit Enter!
 
-### Team Member: HTML Enhancements
-- Task 1: Review and enhance the HTML structure based on feedback from other team members.
-- Task 2: Ensure all elements are correctly placed and linked.
+---
 
-### Team Member: CSS Enhancements
-- Task 1: Review and enhance the CSS styling based on feedback from other team members.
-- Task 2: Ensure the design is responsive and visually appealing.
+## 📸 Screenshots
 
-### Team Member: JavaScript Enhancements
-- Task 1: Review and enhance the JavaScript functionality based on feedback from other team members.
-- Task 2: Ensure the search functionality works correctly and displays the weather information.
+*(Optional: Add some screenshots or a demo GIF)*
 
-## Step 5: Testing and Debugging
-1. Test the application to ensure all functionalities work as expected.
-2. Fix any bugs or issues that arise during testing.
-
-## Step 6: Final Review and Deployment
-1. Conduct a final review of the project to ensure everything is in place.
-2. Deploy the application to a web server or hosting service (e.g., GitHub Pages).
-
-## Task Assignments
-
-### Team Member (HTML and Basic Structure)
-- Create and structure `index.html`.
-- Enhance the HTML structure based on feedback.
-
-### Team Member (CSS Styling)
-- Create and style `style.css`.
-- Enhance the CSS styling based on feedback.
-
-### Team Member (JavaScript Functionality)
-- Create and implement `script.js`.
-- Enhance the JavaScript functionality based on feedback.
+---
+![alt text](image.png)
