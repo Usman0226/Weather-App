@@ -72,16 +72,7 @@ const UpdateIcon = (data, timelabel) => {
 
   const values = Object.keys(Icons); //Turns the object data vlaue's keywords into an array
   // console.log(values);
-
-  // values.forEach((val) => {
-  //   const element = document.getElementById(`Icon-${timelabel}`);
-  //   // accessing the array values
-  //   if (Icons[weatherCondition]) {
-  //     element.className = "fa-solid " + Icons[weatherCondition];
-  //   }
-  //   console.log(val);// Prints the entire array
-  // });
-
+  
   const element = document.getElementById(`Icon-${timelabel}`);
   // accessing the array values
   if (Icons[weatherCondition] && element) {
@@ -138,15 +129,16 @@ const hourlyForecast = async (city) => {
   });
 
   //Weekly Forecast Data fill-up
-  const weekList = hourForecast.list; //weekList => array of the list
+  const weekList = hourForecast.list; // weekList => array of the list
+  console.log(weekList);
   for (let i = 4; i <= weekList.length; i += 8) {
     //day extraction
     const dt = weekList[i].dt;
     const weekdate = new Date(dt * 1000);
     const day = weekdate.toLocaleDateString([], {
       weekday: "long",
-    });
-    console.log(day);
+    }); 
+    console.log(day);  //logs day to the console
 
     const weekday_max_temp = weekList[i].main.temp_max;
     const weekday_min_temp = weekList[i].main.temp_min;
@@ -158,13 +150,15 @@ const hourlyForecast = async (city) => {
       condition: weatherCondition,
     };
 
-    //updating the UI
+    //updating the UI for week
     const weekelement = document.getElementById(day);
     if (weeklyData[day] && weekelement) {
       document.getElementById(`${day}-temp`).innerHTML = Math.round(weeklyData[day].maxtemp) + "°/" + Math.round(weeklyData[day].mintemp) + "°";
       document.getElementById(`${day}-condition`).innerHTML = weeklyData[day].condition;
+      UpdateIcon(weekList[i],day);
     }
     console.log(weeklyData[day]);
+    
   }
   console.log(weeklyData);
 };
@@ -184,7 +178,7 @@ const getAQIndex = async (lat, lon) => {
   UpdateProgressbar(aqi);
 };
 
-function UpdateProgressbar(val){
-    const slidebar = document.querySelector('#slider');
-    slidebar.value = val;
+function UpdateProgressbar(val) {
+  const slidebar = document.querySelector('#slider');
+  slidebar.value = val;
 }

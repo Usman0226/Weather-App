@@ -15,7 +15,21 @@
     2.Temp
     3.weather Info like cloudy / Rainy
     4.List of weather changes in a day (horizontal scroll)
+    
     5. -->
+
+    <video src="/Assets/sunn.mp4" autoplay muted loop playsinline style="
+            position : fixed ;
+            top :0;
+            left : 0;
+            width:100vw;
+            height: 100vh;
+            background : rgba(0,0,0,1);
+            z-index:-1;
+            filter: brightness(0.88);
+            object-fit:cover;
+        ">
+    </video>
     <header>
 
         <div class="search">
@@ -23,7 +37,7 @@
             <input type="search" id="search" placeholder="Search">
         </div>
 
-        <h1> Madanapalle</h1>
+        <h1 id="city"> Madanapalle</h1>
         <div class="temp">
             37&deg;
         </div>
@@ -45,7 +59,7 @@
                 </li>
                 <li>
 
-                    <div class="Time" >
+                    <div class="Time">
                         <h5 class="Top">2AM</h5>
                         <i id="Icon-2AM" class="fa-solid fa-sun"></i>
                         <h5 id="2AM" class="bottom">36&deg;</h5>
@@ -53,7 +67,7 @@
                 </li>
 
                 <li>
-                    <div class="Time" >
+                    <div class="Time">
                         <h5 class="Top">5AM</h5>
                         <i id="Icon-5AM" class="fa-solid fa-cloud-bolt"></i>
                         <h5 id="5AM" class="bottom">36&deg;</h5>
@@ -70,18 +84,18 @@
                     <div class="Time">
                         <h5 class="Top">11AM</h5>
                         <i id="Icon-11AM" class="fa-solid fa-poo-storm"></i>
-                        <h5   id="11AM"  class="bottom">36&deg;</h5>
+                        <h5 id="11AM" class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
-                    <div class="Time" >
+                    <div class="Time">
                         <h5 class="Top">2PM</h5>
                         <i id="Icon-2PM" class="fa-solid fa-temperature-low"></i>
                         <h5 id="2PM" class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
-                    <div class="Time" >
+                    <div class="Time">
                         <h5 class="Top">5PM</h5>
                         <i id="Icon-5PM" class="fa-solid fa-cloud-sun"></i>
                         <h5 id="5PM" class="bottom">36&deg;</h5>
@@ -91,14 +105,14 @@
                     <div class="Time">
                         <h5 class="Top">8PM</h5>
                         <i id="Icon-8PM" class="fa-solid fa-cloud-sun"></i>
-                        <h5  id="8PM" class="bottom">36&deg;</h5>
+                        <h5 id="8PM" class="bottom">36&deg;</h5>
                     </div>
                 </li>
                 <li>
                     <div class="Time">
                         <h5 class="Top">11PM</h5>
                         <i id="Icon-11PM" class="fa-solid fa-cloud-sun"></i>
-                        <h5  id="11PM" class="bottom">36&deg;</h5>
+                        <h5 id="11PM" class="bottom">36&deg;</h5>
                     </div>
                 </li>
             </ol>
@@ -109,50 +123,105 @@
             <div class="main">
 
                 <div class="sub">
-                    <h3 id="Sunday" >Sunday</h3>
-                    <b id="Sunday-condition">Sunny</b>
-                    <p id="Sunday-temp" >18&deg;/28&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Sunday">Sunday</h3>
+                        <i id="Icon-Sunday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Sunday-condition">Sunny</b>
+                        <p id="Sunday-temp">18&deg;/28&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Monday">Monday</h3>
-                    <b id="Monday-condition">Cloudy</b>
-                    <p id="Monday-temp" >19&deg;/27&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Monday">Monday</h3>
+                        <i id="Icon-Monday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Monday-condition">Cloudy</b>
+                        <p id="Monday-temp">19&deg;/27&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Tuesday">Tuesday</h3>
-                    <b id="Tuesday-condition">Rainy</b>
-                    <p id="Tuesday-temp" >20&deg;/24&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Tuesday">Tuesday</h3>
+                        <i id="Icon-Tuesday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Tuesday-condition">Rainy</b>
+                        <p id="Tuesday-temp">20&deg;/24&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Wednesday">Wednesday</h3>
-                    <b id="Wednesday-condition">Thunderstorm</b>
-                    <p id="Wednesday-temp" >21&deg;/23&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Wednesday">Wednesday</h3>
+                        <i id="Icon-Wednesday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Wednesday-condition">Thunderstorm</b>
+                        <p id="Wednesday-temp">21&deg;/23&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Thursday">Thursday</h3>
-                    <b id="Thursday-condition">Windy</b>
-                    <p id="Thursday-temp" >22&deg;/25&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Thursday">Thursday</h3>
+                        <i id="Icon-Thursday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Thursday-condition">Windy</b>
+                        <p id="Thursday-temp">22&deg;/25&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Friday">Friday</h3>
-                    <b id="Friday-condition"></b> Partly Cloudy</b>
-                    <p id="Friday-temp" >20&deg;/26&deg;</p>
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Friday">Friday</h3>
+                        <i id="Icon-Friday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Friday-condition"> Partly Cloudy</b>
+                        <p id="Friday-temp">20&deg;/26&deg;</p>
+                    </div>
                 </div>
                 <div class="sub">
-                    <h3 id="Saturday">Saturday</h3>
-                    <b id="Saturday-condition">Partly Cloudy</b>
-                    <p id="Saturday-temp" >17&deg;/26&deg;</p>
-                </div> 
+                    <div class="effect"></div>
+                    <div class="tint"></div>
+                    <div class="shine"></div>
+                    <div class="text">
+                        <h3 id="Saturday">Saturday</h3>
+                        <i id="Icon-Saturday" class="fa-solid fa-cloud-sun"></i>
+                        <b class="weatherCondition" id="Saturday-condition">Partly Cloudy</b>
+                        <p id="Saturday-temp">17&deg;/26&deg;</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="wind">
             <div class="details">
-                <p 
-                style=
-                "padding-bottom: 9px;
-                margin-bottom:9px;"
-                ><i class="fa-solid fa-wind"></i> WIND</p>
+                <p style="
+                    padding-bottom: 9px;
+                    margin-bottom:9px;
+                    font-size: 0.52em;
+                    font-weight : 500px;
+                    display : flex;
+                    align-items : center;
+                    justify-content : flex-start;
+                    gap : 15px
+                    ">
+
+                    <i class="fa-solid fa-wind" style="
+                        padding-left : 10px;
+                        font-size: 20px;
+                    ">
+                    </i>
+                    WIND
+                </p>
                 <section>
                     <h5>WIND SPEED</h5>
                     <h5 id="windspeed">14 kph</h5>
@@ -166,19 +235,33 @@
                     <h5 id="dir">109&deg; ESE</h5>
                 </section>
             </div>
-            
+
             <div class="air">
                 <p id="head">AIR QUALITY</p>
                 <div class="airsec">
-                    <h3 id="aqi" >83</h3>
+                    <h1 id="aqi">83</h1>
                     <p id="aqilabel">Satisfactory</p>
                     <input type="range" min="0" max="6" value="2" id="slider">
                     <p>Air quality index is 83, which is similar to yesterday at this time</p>
-                 </div>
+                </div>
             </div>
         </div>
 
+
+
+
     </main>
+
+
+    <svg style="display: none;">
+        <filter id="displacementFilter">
+            <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="2" result="turbulence" />
+            <feDisplacementMap in="SourceGraphic" scale="200" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+
+
 </body>
 
 <script src="script.js"></script>
