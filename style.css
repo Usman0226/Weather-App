@@ -27,9 +27,9 @@ html,
 body {
     width: auto;
     height: auto;
-    background:url(overcastClouds.jpg);
+/*     background:url(overcastClouds.jpg);
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
 }
 
 
