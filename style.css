@@ -27,10 +27,9 @@ html,
 body {
     width: auto;
     height: auto;
-    background:url(/Weather-App/Assets/overcastClouds.jpg);
+    background:url(/Assets/overcastClouds.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-
 }
 
 
