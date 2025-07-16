@@ -1,5 +1,7 @@
 const search = document.getElementById("search");
 const API_key = "888c6f6d1a152bfd3be977d295ab111f";
+const cityAPI_key = "add6f02489msh43867bd6465d078p1b0dc2jsnda3ae3ae720c";
+const suggestions = document.getElementById("suggestions");
 
 const Icons = {
   Clear: "fa-sun",
@@ -29,9 +31,26 @@ const levels = {
 search.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
     let city = search.value;
+    getSuggestions(city);
     console.log(city);
     getweather(city);
   }
+});
+
+let timer;
+search.addEventListener("input", () => {
+  const city = search.value;
+
+  if (city.length < 2) {
+    suggestions.innerHTML = "";
+    return;
+  }
+
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    getSuggestions(city);
+  }, 2000);
+  // getweather(city);
 });
 
 const getweather = async (city) => {
@@ -201,13 +220,12 @@ srchbr.addEventListener("click", () => {
 window.addEventListener("load", () => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
-    async function (position) {
+      async function (position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-      
-        const city = await getcity(lat,lon);
+
+        const city = await getcity(lat, lon);
         getweather(city);
-        
       },
       function (error) {
         console.error("Error getting location:", error.message);
@@ -224,23 +242,62 @@ window.addEventListener("load", () => {
 });
 
 const scroll = new LocomotiveScroll({
-    el: document.querySelector('[data-scroll-container]'),
+  el: document.querySelector("[data-scroll-container]"),
+  smooth: true,
+  smartphone: {
     smooth: true,
-    smartphone: {
-    smooth: true
   },
   tablet: {
-    smooth: true
-  }
+    smooth: true,
+  },
 });
 
-async function getcity(lat,lon) {
-   const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
-
-   let data = await fetch(url);
-   let reponse = await data.json();
+async function getcity(lat, lon) {
+  const url = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_key}`;
+  let data = await fetch(url);
+  let reponse = await data.json();
   // console.log(reponse);
-  const CITY = reponse.address.city;
+  const CITY = reponse[0].name;
+  // console.log(CITY);
+
   return CITY;
-  
 }
+
+async function getSuggestions(value) {
+  // const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${value}&countryIds=IN&limit=5&sort=-population`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${value},IN&limit=5&appid=${API_key}`;
+
+  let response = await fetch(url);
+  let data = await response.json();
+
+  console.log(data);
+  displaySuggestions(data);
+}
+
+function displaySuggestions(cities) {
+  suggestions.innerHTML = "";
+  suggestions.style.display = "flex";
+
+  cities.forEach((city) => {
+    const li = document.createElement("li");
+    li.textContent = `${city.name}`;
+    li.classList.add("Matchingcities");
+
+    li.addEventListener("click", () => {
+      search.value = city.name;
+      suggestions.style.display = "none";
+      suggestions.innerHTML = "";
+      search.value = "";
+
+      getweather(city.name);
+    });
+    suggestions.appendChild(li);
+  });
+}
+
+document.addEventListener("click", () => {
+  setTimeout(() => {
+    suggestions.style.display = "none";
+    suggestions.innerHTML = "";
+  }, 500);
+});

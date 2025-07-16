@@ -14,7 +14,7 @@
     --glass-blur: 20px;
     --offwhite: #c8a2c8;
     --green: #046307;
-    --plar :#e5e4e2;
+    --plar: #e5e4e2;
 }
 
 * {
@@ -23,20 +23,22 @@
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--txt1);
-    text-shadow: 0 1px 2px rgba(0 , 0, 0,0.7);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
 }
 
 html,
 body {
     width: auto;
     height: auto;
-/*     background:url(overcastClouds.jpg);
+    /*     background:url(overcastClouds.jpg);
     background-size: cover;
     background-repeat: no-repeat; */
 }
-body video{
+
+body video {
     position: fixed;
 }
+
 header {
     padding: 2rem;
     display: flex;
@@ -48,7 +50,7 @@ header {
 }
 
 #city {
-    font-size:1.2em !important;
+    font-size: 0.9em !important;
     margin-top: 20px;
 }
 
@@ -96,7 +98,8 @@ ol {
     bottom: 25%;
 }
 
-ol::-webkit-scrollbar ,.container::-webkit-scrollbar{
+ol::-webkit-scrollbar,
+.container::-webkit-scrollbar {
     display: none;
 }
 
@@ -191,7 +194,7 @@ ol li {
     height: 150px;
     align-self: center;
     /* background: rgba(255, 255, 255, 0.1); */
-     background: rgb(0 0 0 / 16%);
+    background: rgb(0 0 0 / 16%);
     padding: 20px;
     display: flex;
     align-items: center;
@@ -258,18 +261,20 @@ ol li {
     background: transparent;
     align-self: center;
     border: none;
-     backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border-radius: 28px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
     filter: drop-shadow(-8px -10px 46px #0000005f);
     backdrop-filter: brightness(1.1) blur(2px) url(#displacementFilter);
-     text-align: center;
+    text-align: center;
     ;
+    /* transform: translate(0%,-27%); */
 }
 
 
-#search:focus , .search:focus{
+#search:focus,
+.search:focus {
     border: none;
     outline: none;
     background: transparent;
@@ -279,14 +284,16 @@ ol li {
 .search {
     z-index: 99999;
     display: flex;
+    /* flex-direction:column; */
     justify-content: center;
     align-items: center;
     width: 65vw;
     height: 2.5rem;
     padding: 5px 10px;
+    margin-bottom: 20px;
     /* background-color: var(--cloudy); */
-     background: rgba(255, 255, 255, 0.1);
-     backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border-radius: 28px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -320,7 +327,7 @@ ol li {
 }
 
 .details {
-   display: flex;
+    display: flex;
     flex: 1 1 150px;
     flex-direction: column;
     min-width: 200px;
@@ -330,7 +337,7 @@ ol li {
     /* background-color: var(--Night); */
     background: rgb(0 0 0 / 16%);
     padding: 20px 25px 10px 0;
-   backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border-radius: 28px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -344,7 +351,7 @@ section {
     justify-content: space-between;
     line-height: 40px;
     padding-left: 25px;
-    
+
 }
 
 section h5 {
@@ -352,7 +359,7 @@ section h5 {
 }
 
 .air {
-     flex: 1 1 150px;
+    flex: 1 1 150px;
     width: 50%;
     min-width: 200px;
     /* min-width: 250px; */
@@ -437,15 +444,55 @@ section h5 {
 }
 
 
-.search.active{
+.search.active {
     height: 50px;
     border-radius: 28px;
 }
 
-.container{
+.container {
     width: 100vw;
-    height:auto;
+    height: auto;
     overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 30px;
 }
+
+#suggestions {
+    width: 65vw;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: brightness(1.1) blur(8px) url(#displacementFilter);
+    border-radius:  28px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    filter: drop-shadow(-8px -10px 46px #0000005f);
+    position: absolute;
+    z-index: 99999;
+    transform: translateY(68%);
+    padding: 10px 20px;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 200px;
+    overflow-y: auto;
+    gap: 8px;
+     list-style: none;
+    padding: 0 35px;
+    margin-top: 30px;
+}
+
+#suggestions li {
+    font-size: 0.6em;
+    color: var(--txt1);
+    text-align: left;
+    width: 100%;
+    padding: 2px 15px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#suggestions li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 28px;
+}
+
+
