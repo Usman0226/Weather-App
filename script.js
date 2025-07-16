@@ -1,6 +1,5 @@
 const search = document.getElementById("search");
 const API_key = "888c6f6d1a152bfd3be977d295ab111f";
-const cityAPI_key = "add6f02489msh43867bd6465d078p1b0dc2jsnda3ae3ae720c";
 const suggestions = document.getElementById("suggestions");
 
 const Icons = {
@@ -266,8 +265,7 @@ async function getcity(lat, lon) {
 }
 
 async function getSuggestions(value) {
-  // const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${value}&countryIds=IN&limit=5&sort=-population`;
-  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${value},IN&limit=5&appid=${API_key}`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${API_key}`;
 
   let response = await fetch(url);
   let data = await response.json();
