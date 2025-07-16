@@ -49,8 +49,8 @@ search.addEventListener("input", () => {
   clearTimeout(timer);
   timer = setTimeout(() => {
     getSuggestions(city);
-  }, 2000);
-  // getweather(city);
+    getweather(city);
+  }, 1500);
 });
 
 const getweather = async (city) => {
@@ -301,3 +301,7 @@ document.addEventListener("click", () => {
     suggestions.innerHTML = "";
   }, 500);
 });
+
+if(search.value==""){
+  suggestions.style.display = "none";
+}
