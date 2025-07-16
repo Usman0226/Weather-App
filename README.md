@@ -33,17 +33,17 @@ A fully self-built, highly interactive weather forecasting web app that shows:
 
 ---
 
-## 📈 Features
+##  Features
 
-- 🔍 **City-based search with live suggestions** (debounced input)
-- 🌐 **Auto-fetch weather** using current geolocation
-- 🌡️ Current temperature, weather condition, wind stats
-- 🕐 Hourly forecast blocks (with icons and time mapping)
-- 📆 Weekly forecast parsed via smart timestamp logic
-- 💨 Real-time AQI with emoji-based severity labels
-- 🎞️ Dynamic background video that changes with weather condition
-- 🧭 Smooth scroll experience (mobile/tablet supported)
-- 📱 Mobile responsive + favicon
+-  **City-based search with live suggestions** (debounced input)
+-  **Auto-fetch weather** using current geolocation
+-  Current temperature, weather condition, wind stats
+-  Hourly forecast blocks (with icons and time mapping)
+-  Weekly forecast parsed via smart timestamp logic
+-  Real-time AQI with emoji-based severity labels
+-  Dynamic background video that changes with weather condition
+-  Smooth scroll experience (mobile/tablet supported)
+-  Mobile responsive + favicon
 
 ---
 
