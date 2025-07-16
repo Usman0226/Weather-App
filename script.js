@@ -87,6 +87,8 @@ const updateWeather = (data) => {
   document.querySelector("#dir").innerHTML = data.wind.deg + "&deg";
 
   UpdateIcon(data, "Now");
+  const condition = data.weather[0].main;
+  updateBgVideo(condition);
 };
 
 const UpdateIcon = (data, timelabel) => {
@@ -302,6 +304,27 @@ document.addEventListener("click", () => {
   }, 500);
 });
 
-if(search.value==""){
+if(search.value == ""){
   suggestions.style.display = "none";
+}
+
+
+function updateBgVideo(condition) {
+  const video = document.querySelector("video");
+
+  const videoList = {
+    Clear: "sunn.mp4",
+    Clouds: "cloudy.mp4",
+    Rain: "rain.mp4",
+    Thunderstorm: "lightning.mp4",
+    Snow: "snw.mp4",
+  };
+
+  const weatherVideo = videoList[condition] || "sunn.mp4";
+
+  if (!video.src.includes(weatherVideo)) {
+    video.src = weatherVideo;
+    video.load();
+    video.play();
+  }
 }
