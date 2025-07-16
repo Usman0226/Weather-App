@@ -35,21 +35,25 @@ search.addEventListener("keydown", (e) => {
 });
 
 const getweather = async (city) => {
-  const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}&units=metric`;
+  try {
+    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}&units=metric`;
 
-  let data = await fetch(URL);
-  console.log(data);
+    let data = await fetch(URL);
+    console.log(data);
 
-  let finalData = await data.json(); //into JSON format
-  console.log(finalData);
-  console.log(finalData.main.temp);
+    let finalData = await data.json(); //into JSON format
+    console.log(finalData);
+    console.log(finalData.main.temp);
 
-  const lat = finalData.coord.lat;
-  const lon = finalData.coord.lon;
+    const lat = finalData.coord.lat;
+    const lon = finalData.coord.lon;
 
-  getAQIndex(lat, lon);
-  hourlyForecast(city);
-  updateWeather(finalData);
+    getAQIndex(lat, lon);
+    hourlyForecast(city);
+    updateWeather(finalData);
+  } catch (error) {
+    alert("Invalid City Name !");
+  }
 };
 
 const updateWeather = (data) => {
@@ -72,7 +76,7 @@ const UpdateIcon = (data, timelabel) => {
 
   const values = Object.keys(Icons); //Turns the object data vlaue's keywords into an array
   // console.log(values);
-  
+
   const element = document.getElementById(`Icon-${timelabel}`);
   // accessing the array values
   if (Icons[weatherCondition] && element) {
@@ -137,8 +141,8 @@ const hourlyForecast = async (city) => {
     const weekdate = new Date(dt * 1000);
     const day = weekdate.toLocaleDateString([], {
       weekday: "long",
-    }); 
-    console.log(day);  //logs day to the console
+    });
+    console.log(day); //logs Current day value to the console
 
     const weekday_max_temp = weekList[i].main.temp_max;
     const weekday_min_temp = weekList[i].main.temp_min;
@@ -153,12 +157,16 @@ const hourlyForecast = async (city) => {
     //updating the UI for week
     const weekelement = document.getElementById(day);
     if (weeklyData[day] && weekelement) {
-      document.getElementById(`${day}-temp`).innerHTML = Math.round(weeklyData[day].maxtemp) + "°/" + Math.round(weeklyData[day].mintemp) + "°";
-      document.getElementById(`${day}-condition`).innerHTML = weeklyData[day].condition;
-      UpdateIcon(weekList[i],day);
+      document.getElementById(`${day}-temp`).innerHTML =
+        Math.round(weeklyData[day].maxtemp) +
+        "°/" +
+        Math.round(weeklyData[day].mintemp) +
+        "°";
+      document.getElementById(`${day}-condition`).innerHTML =
+        weeklyData[day].condition;
+      UpdateIcon(weekList[i], day);
     }
     console.log(weeklyData[day]);
-    
   }
   console.log(weeklyData);
 };
@@ -179,6 +187,56 @@ const getAQIndex = async (lat, lon) => {
 };
 
 function UpdateProgressbar(val) {
-  const slidebar = document.querySelector('#slider');
+  const slidebar = document.querySelector("#slider");
+  slidebar.disable;
   slidebar.value = val;
+}
+
+const srchbr = document.getElementById("sbar");
+
+srchbr.addEventListener("click", () => {
+  srchbr.classList.toggle("active");
+});
+
+window.addEventListener("load", () => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+    async function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+      
+        const city = await getcity(lat,lon);
+        getweather(city);
+        
+      },
+      function (error) {
+        console.error("Error getting location:", error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+      }
+    );
+  } else {
+    alert("Geolocation is not supported by this browser");
+    console.log("Geolocation is not supported by this browser.");
+  }
+});
+
+const scroll = new LocomotiveScroll({
+    el: document.querySelector('[data-scroll-container]'),
+    smooth: true
+});
+
+async function getcity(lat,lon) {
+   const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+   let data = await fetch(url);
+   let reponse = await data.json();
+  console.log(reponse);
+
+  const CITY = reponse.address.city;
+
+  return CITY;
+  
 }
