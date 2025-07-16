@@ -225,7 +225,13 @@ window.addEventListener("load", () => {
 
 const scroll = new LocomotiveScroll({
     el: document.querySelector('[data-scroll-container]'),
+    smooth: true,
+    smartphone: {
     smooth: true
+  },
+  tablet: {
+    smooth: true
+  }
 });
 
 async function getcity(lat,lon) {
@@ -233,10 +239,8 @@ async function getcity(lat,lon) {
 
    let data = await fetch(url);
    let reponse = await data.json();
-  console.log(reponse);
-
+  // console.log(reponse);
   const CITY = reponse.address.city;
-
   return CITY;
   
 }
