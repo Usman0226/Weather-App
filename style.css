@@ -34,11 +34,9 @@ body {
     background-size: cover;
     background-repeat: no-repeat; */
 }
-
-body{
+body video{
     position: fixed;
 }
-
 header {
     padding: 2rem;
     display: flex;
@@ -440,7 +438,6 @@ section h5 {
 
 
 .search.active{
-    width: 60vw;
     height: 50px;
     border-radius: 28px;
 }
