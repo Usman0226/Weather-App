@@ -1,37 +1,49 @@
 
-# 🌤️ Weather Forecast App
+# 🌤️ Weather Forecast App – 
 
-A fully self-built weather forecasting web app that shows:
+A fully self-built, highly interactive weather forecasting web app that shows:
 
-- ✅ Current weather
-- 🕐 Hourly forecast (today & tomorrow)
-- 📆 Weekly forecast (5 days)
-- 💨 Air Quality Index (AQI)
+# Live : 
+- https://usman0226.github.io/Weather-App/
 
-> 🔧 Built entirely through self-written logic 
+-  Current weather
+-  Hourly forecast (today & tomorrow)
+-  Weekly forecast (5 days)
+-  Air Quality Index (AQI)
+-  Dynamic background videos based on weather
+-  Live search suggestions (with debounce)
+-  Auto location weather on page load
+-  Smooth scroll via Locomotive.js
+
+🔧 Built entirely through self-written logic — no frameworks, no copied code.
 
 ---
-
 
 ## 🛠️ Technologies Used
 
 - **HTML5 + CSS3**
-- **Vanilla JavaScript (no frameworks)**
-- **[OpenWeatherMap API](https://openweathermap.org/api)**:
-  - Current weather
-  - 5-day / 3-hour forecast
-  - Air pollution (AQI)
+- **Vanilla JavaScript**
+- **OpenWeatherMap API**  
+  ◦ Current weather  
+  ◦ 5-day / 3-hour forecast  
+  ◦ Air pollution (AQI)  
+- **Geolocation API**
 - **Font Awesome** for weather icons
+- **Locomotive.js** for smooth scrolling
 
 ---
 
 ## 📈 Features
 
-- 🔍 City-based weather search
-- 🌡️ Temperature, weather condition, and wind stats
-- 🕐 Hourly forecast blocks with live icons
-- 📆 Weekly forecast using parsed daily data
-- 💨 Real-time AQI with emoji-based severity label
+- 🔍 **City-based search with live suggestions** (debounced input)
+- 🌐 **Auto-fetch weather** using current geolocation
+- 🌡️ Current temperature, weather condition, wind stats
+- 🕐 Hourly forecast blocks (with icons and time mapping)
+- 📆 Weekly forecast parsed via smart timestamp logic
+- 💨 Real-time AQI with emoji-based severity labels
+- 🎞️ Dynamic background video that changes with weather condition
+- 🧭 Smooth scroll experience (mobile/tablet supported)
+- 📱 Mobile responsive + favicon
 
 ---
 
@@ -41,48 +53,44 @@ A fully self-built weather forecasting web app that shows:
 User Input (Search bar)
         │
         ▼
- getweather(city)  ←────── Enter key
+ getweather(city)  ←────── Enter key or debounce input
         │
-        ├─► updateWeather(data) ──► DOM: city, temp, wind, description
+        ├─► updateWeather(data)
+        │       └─► DOM update: city name, temp, wind, desc
         │
-        ├─► UpdateIcon(data, "Now") ──► sets icon based on weather condition
+        ├─► UpdateIcon(data, "Now") → set weather icon
         │
-        ├─► getAQIndex(lat, lon) ──► fetches & displays AQI
+        ├─► updateBgVideo(condition) → video.mp4 swap based on weather
+        │
+        ├─► getAQIndex(lat, lon)
+        │       └─► updates AQI number + emoji label + slider
         │
         └─► hourlyForecast(city)
-               ├─► hourForeCastData { "2PM": { temp, icon }, ... }
-               └─► weeklyData {
-                      Monday:  { maxtemp, mintemp, condition },
-                      Tuesday: { ... },
-                    }
+                ├─► hourForeCastData { "2PM": { temp, icon }, ... }
+                └─► weeklyData {
+                        Monday:  { maxtemp, mintemp, condition },
+                        Tuesday: { ... },
+                      }
 ```
 
 ---
 
 ## 📂 Core Function Breakdown
 
-### 🔹 `getweather(city)`
-- Fetches current weather data
-- Extracts `lat`, `lon`
-- Calls:
-  - `updateWeather()`
-  - `getAQIndex()`
-  - `hourlyForecast()`
+🔹 **getweather(city)**  
+• Fetches current weather  
+• Extracts lat/lon  
+• Calls:
+  ◦ updateWeather()  
+  ◦ getAQIndex()  
+  ◦ hourlyForecast()  
 
----
+🔹 **updateWeather(data)**  
+• Updates DOM elements (city, temp, wind, description)  
+• Calls UpdateIcon() & updateBgVideo()
 
-### 🔹 `updateWeather(data)`
-- Updates DOM:
-  - `h1`: city name
-  - `.temp`: current temperature
-  - `.Info`: condition description
-  - Wind speed, gust, direction
-- Calls `UpdateIcon(data, "Now")`
-
----
-
-### 🔹 `UpdateIcon(data, timelabel)`
-- Matches `data.weather[0].main` to icon from this object:
+🔹 **UpdateIcon(data, timelabel)**  
+• Matches `data.weather[0].main` to icon from:
 ```js
 Icons = {
   Clear: "fa-sun",
@@ -90,65 +98,52 @@ Icons = {
   ...
 };
 ```
-- Applies icon to `#Icon-${timelabel}` element
+• Applies it to the relevant `#Icon-${timelabel}` element
 
----
-
-### 🔹 `getAQIndex(lat, lon)`
-- Calls:
-  ```
-  https://api.openweathermap.org/data/2.5/air_pollution
-  ```
-- Extracts AQI value (1–5)
-- Maps to:
+🔹 **getAQIndex(lat, lon)**  
+• Calls `/air_pollution` API  
+• Gets `aqi = 1–5`, maps to:
 ```js
 levels = {
-  1: "Good 🌿", 2: "Fair 🌤️", ...
+  1: "Good ", 2: "Fair ", ...
 };
 ```
+• Updates label + slider
 
----
-
-### 🔹 `hourlyForecast(city)`
-- Calls:
-  ```
-  /data/2.5/forecast?q=${city}
-  ```
-- For each item:
-  - Converts UNIX → `Date` → time label
-  - Stores in `hourForeCastData`:
-  ```js
-  {
-    "2PM": { temp: 34, icon: "Clouds" },
-    ...
-  }
-  ```
-  - Updates UI if corresponding time block exists in the respective Object !
-
----
-
-### 🔹 Weekly Forecast Logic
-- Picks 1 timestamp per day (midpoint logic: `i += 8`)
-- Converts date to weekday name:
-  ```js
-  toLocaleDateString({ weekday: "long" })
-  ```
-- Stores in `weeklyData`:
+🔹 **hourlyForecast(city)**  
+• Fetches 3-hour forecast data  
+• For each:
+  ◦ Converts UNIX → time label  
+  ◦ Stores into:
 ```js
-{
+hourForeCastData = {
+  "2PM": { temp: 34, icon: "Clouds" },
+  ...
+};
+```
+  ◦ Updates UI blocks if they exist
+
+🔹 **Weekly Forecast Logic**  
+• Picks 1 reading every 8 intervals  
+• Converts date → day name via `.toLocaleDateString({ weekday })`  
+• Stores in:
+```js
+weeklyData = {
   Monday: { maxtemp, mintemp, condition },
   ...
-}
+};
 ```
-- Updates UI blocks like:
-  - `#Monday-temp`
-  - `#Monday-condition`
+• Updates blocks like `#Monday-temp`, `#Monday-condition`
+
+🔹 **updateBgVideo(condition)**  
+• Checks `condition` (Clear, Rain, Snow…)  
+• Loads and plays the respective video (`sunn.mp4`, `rain.mp4`, etc.)
 
 ---
 
-## 🧠 Data Structures
+##  Data Structures
 
-### 🕐 Hourly Forecast:
+ Hourly Forecast:
 ```js
 hourForeCastData = {
   "2PM": { temp: 34, icon: "Clouds" },
@@ -156,7 +151,7 @@ hourForeCastData = {
 }
 ```
 
-### 📆 Weekly Forecast:
+📆 Weekly Forecast:
 ```js
 weeklyData = {
   Monday:  { maxtemp: 34, mintemp: 26, condition: "clear sky" },
@@ -164,35 +159,24 @@ weeklyData = {
 }
 ```
 
----
 
-## 💡 Developer Highlights
+## How to Use
 
-- ⌨️ DOM input handling with `keydown` and `.value`
-- 🌐 Multiple asynchronous API calls
-- 📦 JSON parsing & dynamic data mapping
-- 🕓 Date/Time formatting & conversion
-- 🎨 Dynamic icon rendering
-- 🔄 Full data-to-UI pipeline built from scratch
+1. **Clone the repo**
+```bash
+git clone https://github.com/your-username/weather-app.git
+```
 
+2. **Add your API key**
+```js
+const API_key = 'YOUR_API_KEY';
+// Get it from: https://openweathermap.org/api
+```
 
-## 📥 How to Use
+3. **Open index.html** in your browser
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/weather-app.git
-   ```
+4. **Start typing a city** – get suggestions, click or press Enter!
 
-2. Add your API key to the JS file:
-   ```js
-   const API_key = 'YOUR_API_KEY'; (Get your API_key from OpenWeather webpage)
-   ```
-
-3. Open `index.html` in your browser.
-
-4. Type any city and hit Enter!
-
----
 
 ## 📸 Screenshots
-![alt text](Assets/screenshot.png)
+![alt text](Assets/image.png)
