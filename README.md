@@ -79,7 +79,7 @@ User Input (Search bar)
 
 🔹 **getweather(city)**  
 • Fetches current weather  
-• Extracts lat/lon  
+• Extracts lat/lon     
 • Calls:
   ◦ updateWeather()  
   ◦ getAQIndex()  

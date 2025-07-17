@@ -70,7 +70,9 @@ const getweather = async (city) => {
     hourlyForecast(city);
     updateWeather(finalData);
   } catch (error) {
-    alert("Invalid City Name !");
+     setTimeout(()=>{
+      alert("Invalid City Name !");
+     },2650)
   }
 };
 
@@ -326,3 +328,24 @@ function updateBgVideo(condition) {
     video.play();
   }
 }
+
+
+
+// Intro
+
+let sync = gsap.timeline();
+
+
+sync.from("#intro h3",{
+    y : 40,
+    opacity : 0,
+    duration : 1.5,
+    stagger: 0.2,
+})
+
+sync.to("#intro",{
+  opacity:0,
+  y : -10,
+  duration: 1,
+  stagger:0.1
+})
