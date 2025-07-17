@@ -507,9 +507,10 @@ section h5 {
     align-items: center;
     justify-content: center;
     color: #fff;
-    gap: 8px;
+    gap: 3px;
 }
 
 #intro h3{
-    font-size: 1.6vw;
+    font-size: 2vh
+
 }
