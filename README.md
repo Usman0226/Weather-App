@@ -1,157 +1,197 @@
+# 🌤️ SkyCast – Weather Forecast App
 
-# 🌤️ Weather Forecast App – 
+[![Status](https://img.shields.io/badge/status-active-brightgreen.svg)]()
 
-A fully self-built, highly interactive weather forecasting web app that shows:
+## 🔗 Live Demo
+ [Click here to try SkyCast](https://your-github-username.github.io/skycast/)
 
-# Live : 
-- https://usman0226.github.io/Weather-App/
-
--  Current weather
--  Hourly forecast (today & tomorrow)
--  Weekly forecast (5 days)
--  Air Quality Index (AQI)
--  Dynamic background videos based on weather
--  Live search suggestions (with debounce)
--  Auto location weather on page load
--  Smooth scroll via Locomotive.js
-
-🔧 Built entirely through self-written logic — no frameworks, no copied code.
+> Hosted on **GitHub Pages** | Geolocation Support |  Dynamic Background Videos | Smart City Suggestions | 
 
 ---
 
-## 🛠️ Technologies Used
+## 📸 Preview
 
-- **HTML5 + CSS3**
-- **Vanilla JavaScript**
-- **OpenWeatherMap API**  
-  ◦ Current weather  
-  ◦ 5-day / 3-hour forecast  
-  ◦ Air pollution (AQI)  
-- **Geolocation API**
-- **Font Awesome** for weather icons
-- **Locomotive.js** for smooth scrolling
+![Screenshot](Assets/image.png)
 
 ---
 
 ##  Features
 
--  **City-based search with live suggestions** (debounced input)
--  **Auto-fetch weather** using current geolocation
--  Current temperature, weather condition, wind stats
--  Hourly forecast blocks (with icons and time mapping)
--  Weekly forecast parsed via smart timestamp logic
--  Real-time AQI with emoji-based severity labels
--  Dynamic background video that changes with weather condition
--  Smooth scroll experience (mobile/tablet supported)
--  Mobile responsive + favicon
+-  Real-Time Weather with Dynamic UI
+-  Hourly Forecast with Weather Icons
+-  Weekly Forecast (Aggregated from 3-Hour Data)
+-  Air Quality Index (AQI) with Visual Slider
+-  Weather-Based Background Video Transitions
+-  Smart Autocomplete for City Names
+-  Geolocation Detection on Load
+-  Liquid Glass
+-  Intro Animation & Smooth Scrolling (GSAP + Locomotive)
+-  Fully Responsive and Mobile Friendly
+
+
+
+## ⚙️ How It Works
+
+### 🧱 Architecture
+
+```ascii
++------------------------+
+|   User Input / Geo     |
++-----------+------------+
+            |
+            ▼
++----------------------------+
+|  OpenWeather API Endpoints |
++-----------+----------------+
+            |
+            ▼
++-----------------------------+
+|     Data Processing Layer   |
+|  - Hourly Forecast Parser   |
+|  - Weekly Aggregator        |
+|  - AQI Formatter            |
++-------------+---------------+
+              |
+              ▼
++------------------------------+
+|     UI Rendering Engine      |
+|  - DOM Updates               |
+|  - Background Video Swap     |
+|  - Suggestion Dropdown       |
++------------------------------+
+````
 
 ---
 
-## 📦 Data Flow (ASCII Diagram)
+## 🔄 Data Flow
 
 ```
-User Input (Search bar)
+User Input / Geolocation
         │
         ▼
- getweather(city)  ←────── Enter key or debounce input
+ getweather(city)
         │
         ├─► updateWeather(data)
-        │       └─► DOM update: city name, temp, wind, desc
+        │       └─► DOM update: city, temp, wind, condition
         │
-        ├─► UpdateIcon(data, "Now") → set weather icon
+        ├─► UpdateIcon(data, "Now")
         │
-        ├─► updateBgVideo(condition) → video.mp4 swap based on weather
+        ├─► updateBgVideo(condition)
         │
         ├─► getAQIndex(lat, lon)
-        │       └─► updates AQI number + emoji label + slider
+        │       └─► AQI Value + Emoji + Slider
         │
         └─► hourlyForecast(city)
-                ├─► hourForeCastData { "2PM": { temp, icon }, ... }
-                └─► weeklyData {
-                        Monday:  { maxtemp, mintemp, condition },
-                        Tuesday: { ... },
-                      }
+                ├─► hourlyForecastData = { "2PM": {...}, ... }
+                └─► weeklyData = { Monday: {...}, ... }
 ```
 
 ---
 
-## 📂 Core Function Breakdown
+##  Core Function Breakdown
 
-🔹 **getweather(city)**  
-• Fetches current weather  
-• Extracts lat/lon     
-• Calls:
-  ◦ updateWeather()  
-  ◦ getAQIndex()  
-  ◦ hourlyForecast()  
+### 🔹 `getweather(city)`
 
-🔹 **updateWeather(data)**  
-• Updates DOM elements (city, temp, wind, description)  
-• Calls UpdateIcon() & updateBgVideo()
+* Fetches current weather
+* Extracts lat/lon
+* Triggers:
 
-🔹 **UpdateIcon(data, timelabel)**  
-• Matches `data.weather[0].main` to icon from:
+  * `updateWeather()`
+  * `getAQIndex()`
+  * `hourlyForecast()`
+
+### 🔹 `updateWeather(data)`
+
+* Updates city name, temp, wind, condition in DOM
+* Calls:
+
+  * `UpdateIcon()`
+  * `updateBgVideo()`
+
+### 🔹 `UpdateIcon(data, timelabel)`
+
+* Maps weather condition to FontAwesome icon:
+
 ```js
 Icons = {
   Clear: "fa-sun",
   Rain: "fa-cloud-showers-heavy",
+  Clouds: "fa-cloud",
   ...
 };
 ```
-• Applies it to the relevant `#Icon-${timelabel}` element
 
-🔹 **getAQIndex(lat, lon)**  
-• Calls `/air_pollution` API  
-• Gets `aqi = 1–5`, maps to:
+### 🔹 `getAQIndex(lat, lon)`
+
+* Fetches AQI from `/air_pollution` endpoint
+* Maps 1–5 to health levels:
+
 ```js
 levels = {
-  1: "Good ", 2: "Fair ", ...
+  1: "Good 🌿", 2: "Fair 🌤️", 3: "Moderate", ...
 };
 ```
-• Updates label + slider
 
-🔹 **hourlyForecast(city)**  
-• Fetches 3-hour forecast data  
-• For each:
-  ◦ Converts UNIX → time label  
-  ◦ Stores into:
+* Updates emoji label and progress slider
+
+### 🔹 `hourlyForecast(city)`
+
+* Loops over 3-hour forecast
+* Converts timestamps to readable hours (e.g. "2PM")
+* Stores into:
+
 ```js
 hourForeCastData = {
-  "2PM": { temp: 34, icon: "Clouds" },
+  "2PM": { temp, icon },
   ...
 };
 ```
-  ◦ Updates UI blocks if they exist
 
-🔹 **Weekly Forecast Logic**  
-• Picks 1 reading every 8 intervals  
-• Converts date → day name via `.toLocaleDateString({ weekday })`  
-• Stores in:
+### 🔹 Weekly Forecast Logic
+
+* Selects every 8th item (\~24hr)
+* Parses into weekday name via `.toLocaleDateString({ weekday })`
+
 ```js
 weeklyData = {
   Monday: { maxtemp, mintemp, condition },
   ...
 };
 ```
-• Updates blocks like `#Monday-temp`, `#Monday-condition`
 
-🔹 **updateBgVideo(condition)**  
-• Checks `condition` (Clear, Rain, Snow…)  
-• Loads and plays the respective video (`sunn.mp4`, `rain.mp4`, etc.)
+* Updates UI elements: `#Monday-temp`, `#Monday-condition`
 
----
+### 🔹 `updateBgVideo(condition)`
 
-##  Data Structures
+* Maps condition to video files:
 
- Hourly Forecast:
+```js
+const videoList = {
+  Clear: "sunny.mp4",
+  Rain: "rain.mp4",
+  Clouds: "cloudy.mp4",
+  Snow: "snow.mp4",
+  ...
+};
+```
+
+* Swaps video background smartly
+
+
+
+## 📂 Data Structures
+
+### ⏱ Hourly Forecast
+
 ```js
 hourForeCastData = {
   "2PM": { temp: 34, icon: "Clouds" },
-  "5PM": { temp: 32, icon: "Rain" }
-}
+  "5PM": { temp: 32, icon: "Rain" },
+};
 ```
 
-📆 Weekly Forecast:
+### 📅 Weekly Forecast
+
 ```js
 weeklyData = {
   Monday:  { maxtemp: 34, mintemp: 26, condition: "clear sky" },
@@ -159,24 +199,110 @@ weeklyData = {
 }
 ```
 
+---
 
-## How to Use
+## 🌐 API Endpoints Used
 
-1. **Clone the repo**
-```bash
-git clone https://github.com/your-username/weather-app.git
-```
+| Type              | Endpoint                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------- |
+| Current Weather   | `https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_key}`                  |
+| 3-Hour Forecast   | `https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_key}`                 |
+| Air Quality Index | `https://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API_key}` |
+| Reverse Geocoding | `https://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&appid={API_key}`        |
+| City Suggestions  | `https://api.openweathermap.org/geo/1.0/direct?q={query}&limit=5&appid={API_key}`           |
 
-2. **Add your API key**
+
+##  Key Functionalities
+
+###  Geolocation Fetch
+
 ```js
-const API_key = 'YOUR_API_KEY';
-// Get it from: https://openweathermap.org/api
+navigator.geolocation.getCurrentPosition((pos) => {
+  const { latitude, longitude } = pos.coords;
+  getcity(latitude, longitude);
+});
 ```
 
-3. **Open index.html** in your browser
+###  Hourly Forecast Extraction
 
-4. **Start typing a city** – get suggestions, click or press Enter!
+```js
+dataList.forEach((el) => {
+  const date = new Date(el.dt * 1000);
+  const time = date.toLocaleTimeString([], { hour: "numeric", hour12: true }).replace(/\s/g, "");
+  hourForeCastData[time] = {
+    temp: el.main.temp,
+    icon: el.weather[0].main
+  };
+});
+```
+
+###  Weekly Aggregation Logic
+
+```js
+for (let i = 4; i <= weekList.length; i += 8) {
+  const date = new Date(weekList[i].dt * 1000);
+  const day = date.toLocaleDateString([], { weekday: "long" });
+  weeklyData[day] = {
+    maxtemp: weekList[i].main.temp_max,
+    mintemp: weekList[i].main.temp_min,
+    condition: weekList[i].weather[0].description,
+  };
+}
+```
+
+###  City Suggestion (Debounced)
+
+```js
+setTimeout(() => getSuggestions(city), 1500);
+```
+
+###  Background Video Handler
+
+```js
+const weatherVideo = videoList[condition] || "default.mp4";
+if (!video.src.includes(weatherVideo)) {
+  video.src = weatherVideo;
+  video.load();
+  video.play();
+}
+```
+
+---
+
+##  UI Enhancements
+
+*  Liquid Glass Weekly Cards
+*  AQI Slider Bar
+*  Smart Autocomplete Dropdown
+* Animated Intro (GSAP)
+*  Mobile-First Layout
+*  Error Feedback for Invalid City
+
+---
+
+##  Local Setup
+
+```bash
+git clone https://github.com/Usman0226/Weather-App.git
+
+```
+
+>  Insert your OpenWeather API key inside `script.js` as:
+
+```js
+const API_key = "your-api-key";
+```
+
+## 🌐 Hosting
+
+App is hosted via **GitHub Pages**
+
+🔗 [https://github.com/Usman0226/Weather-App.git](https://github.com/Usman0226/Weather-App.git)
 
 
-## 📸 Screenshots
-![alt text](Assets/image.png)
+##  Credits
+
+*  [OpenWeatherMap](https://openweathermap.org/)
+* 🌀[Locomotive Scroll](https://github.com/locomotivemtl/locomotive-scroll)
+*  [GSAP](https://greensock.com/gsap/)
+*  Videos: [Pexels](https://pexels.com) & [Coverr](https://coverr.co)

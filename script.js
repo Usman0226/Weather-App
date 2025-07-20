@@ -1,7 +1,3 @@
-
-
-
-
 const search = document.getElementById("search");
 const API_key = "888c6f6d1a152bfd3be977d295ab111f";
 const suggestions = document.getElementById("suggestions");
@@ -337,37 +333,35 @@ function updateBgVideo(condition) {
 
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Using Locomotive Scroll from Locomotive https://github.com/locomotivemtl/locomotive-scroll
-
 const locoScroll = new LocomotiveScroll({
   el: document.querySelector("#mainn"),
   smooth: true
 });
-// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
 locoScroll.on("scroll", ScrollTrigger.update);
 
-// tell ScrollTrigger to use these proxy methods for the "#mainn" element since Locomotive Scroll is hijacking things
 ScrollTrigger.scrollerProxy("#mainn", {
   scrollTop(value) {
     return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
+  },
   getBoundingClientRect() {
     return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
   },
-  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
   pinType: document.querySelector("#mainn").style.transform ? "transform" : "fixed"
 });
 
-// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
 ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 
-// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
 ScrollTrigger.refresh();
+
+
 // Intro
 
 let sync = gsap.timeline();
 const intro = document.querySelector('#intro');
+
+setTimeout(()=>{
+  intro.style.display = "none";
+},2500)
 
 sync.from("#intro h3",{
     y : 40,
@@ -385,3 +379,4 @@ sync.to("#intro",{
         intro.style.display = "none";
     }
 })
+
