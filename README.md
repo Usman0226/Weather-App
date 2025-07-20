@@ -3,13 +3,13 @@
 [![Status](https://img.shields.io/badge/status-active-brightgreen.svg)]()
 
 ## 🔗 Live Demo
- [Click here to try SkyCast](https://your-github-username.github.io/skycast/)
+ [Click here to try SkyCast](https://weather-icq3jz6k1-usman-gani-s-projects.vercel.app)
 
-> Hosted on **GitHub Pages** | Geolocation Support |  Dynamic Background Videos | Smart City Suggestions | 
+> Hosted on **vercel** | Geolocation Support |  Dynamic Background Videos | Smart City Suggestions | 
 
 ---
 
-## 📸 Preview
+##  Preview
 
 ![Screenshot](Assets/image.png)
 
@@ -27,7 +27,6 @@
 -  Liquid Glass
 -  Intro Animation & Smooth Scrolling (GSAP + Locomotive)
 -  Fully Responsive and Mobile Friendly
-
 
 
 ## ⚙️ How It Works
@@ -295,10 +294,7 @@ const API_key = "your-api-key";
 
 ## 🌐 Hosting
 
-App is hosted via **GitHub Pages**
-
-🔗 [https://github.com/Usman0226/Weather-App.git](https://github.com/Usman0226/Weather-App.git)
-
+App is hosted via **vercel**
 
 ##  Credits
 
