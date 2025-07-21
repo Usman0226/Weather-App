@@ -70,9 +70,9 @@ const getweather = async (city) => {
     hourlyForecast(city);
     updateWeather(finalData);
   } catch (error) {
-     setTimeout(()=>{
+    setTimeout(() => {
       alert("Invalid City Name !");
-     },2650)
+    }, 2650);
   }
 };
 
@@ -99,11 +99,16 @@ const UpdateIcon = (data, timelabel) => {
   const values = Object.keys(Icons); //Turns the object data vlaue's keywords into an array
   // console.log(values);
 
-  const element = document.getElementById(`Icon-${timelabel}`);
+  const element =
+    document.getElementById(`Icon-${timelabel}`) ||
+    document.querySelector(`.${timelabel}`);
   // accessing the array values
   if (Icons[weatherCondition] && element) {
     element.className = "fa-solid " + Icons[weatherCondition];
+    return true;
   }
+
+  return false;
 };
 
 // To fill the HourForeCastData Object
@@ -136,8 +141,14 @@ const hourlyForecast = async (city) => {
       hour: "numeric",
       hour12: true,
     });
-    const timelabel = tmLab.replace(/\s/g, ""); //remvoing space
-    console.log(DD);
+
+    const tmLab24 = dateobject.toLocaleTimeString([], {
+      hour: "numeric",
+      hour12: false,
+    });
+
+    const timelabel24 = tmLab24.replace(/\s/g, "").toUpperCase();
+    const timelabel = tmLab.replace(/\s/g, "").toUpperCase(); //remvoing space
 
     if (date == DD || date + 1 == DD) {
       hourForeCastData[timelabel] = {
@@ -145,11 +156,16 @@ const hourlyForecast = async (city) => {
         icon: condition,
       };
 
-      const element = document.getElementById(timelabel);
+      const element =
+        document.getElementById(timelabel) ||
+        document.querySelector(`.${timelabel24}`);
       if (element) {
         element.innerHTML =
           Math.round(hourForeCastData[timelabel].temp) + "&deg";
-        UpdateIcon(el, timelabel);
+        let change = UpdateIcon(el, timelabel);
+        if (!change) {
+          UpdateIcon(el, timelabel24);
+        }
       }
     }
   });
@@ -157,7 +173,7 @@ const hourlyForecast = async (city) => {
   //Weekly Forecast Data fill-up
   const weekList = hourForecast.list; // weekList => array of the list
   console.log(weekList);
-  for (let i = 4; i <= weekList.length; i += 8) {
+  for (let i = 4; i < weekList.length; i += 8) {
     //day extraction
     const dt = weekList[i].dt;
     const weekdate = new Date(dt * 1000);
@@ -304,10 +320,9 @@ document.addEventListener("click", () => {
   }, 500);
 });
 
-if(search.value == ""){
+if (search.value == "") {
   suggestions.style.display = "none";
 }
-
 
 function updateBgVideo(condition) {
   const video = document.querySelector("video");
@@ -329,54 +344,58 @@ function updateBgVideo(condition) {
   }
 }
 
-
-
-
 gsap.registerPlugin(ScrollTrigger);
 const locoScroll = new LocomotiveScroll({
   el: document.querySelector("#mainn"),
-  smooth: true
+  smooth: true,
 });
 locoScroll.on("scroll", ScrollTrigger.update);
 
 ScrollTrigger.scrollerProxy("#mainn", {
   scrollTop(value) {
-    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+    return arguments.length
+      ? locoScroll.scrollTo(value, 0, 0)
+      : locoScroll.scroll.instance.scroll.y;
   },
   getBoundingClientRect() {
-    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+    return {
+      top: 0,
+      left: 0,
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
   },
-  pinType: document.querySelector("#mainn").style.transform ? "transform" : "fixed"
+  pinType: document.querySelector("#mainn").style.transform
+    ? "transform"
+    : "fixed",
 });
 
 ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 
 ScrollTrigger.refresh();
 
-
 // Intro
 
 let sync = gsap.timeline();
-const intro = document.querySelector('#intro');
+const intro = document.querySelector("#intro");
 
-setTimeout(()=>{
+setTimeout(() => {
   intro.style.display = "none";
-},2500)
+}, 2500);
 
-sync.from("#intro h3",{
-    y : 40,
-    opacity : 0,
-    duration : 1.5,
-    stagger: 0.2,
-})
+sync.from("#intro h3", {
+  y: 40,
+  opacity: 0,
+  duration: 1.5,
+  stagger: 0.2,
+});
 
-sync.to("#intro",{
-  opacity:0,
-  y : -10,
+sync.to("#intro", {
+  opacity: 0,
+  y: -10,
   duration: 1,
-  stagger:0.1,
-    onComplete: () => {
-        intro.style.display = "none";
-    }
-})
-
+  stagger: 0.1,
+  onComplete: () => {
+    intro.style.display = "none";
+  },
+});

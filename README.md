@@ -3,7 +3,7 @@
 [![Status](https://img.shields.io/badge/status-active-brightgreen.svg)]()
 
 ## 🔗 Live Demo
- [Click here to try SkyCast](https://weather-icq3jz6k1-usman-gani-s-projects.vercel.app)
+ [Click here to try SkyCast](https://skycast-5a77zat5b-usman-gani-s-projects.vercel.app/)
 
 > Hosted on **vercel** | Geolocation Support |  Dynamic Background Videos | Smart City Suggestions | 
 
@@ -174,7 +174,7 @@ const videoList = {
 };
 ```
 
-* Swaps video background smartly
+* Swaps video background accordingly !
 
 
 
@@ -270,7 +270,7 @@ if (!video.src.includes(weatherVideo)) {
 
 ##  UI Enhancements
 
-*  Liquid Glass Weekly Cards
+*  Liquid Glass Weekly Cards ( Not perfect , yet figured out how to make one )
 *  AQI Slider Bar
 *  Smart Autocomplete Dropdown
 * Animated Intro (GSAP)
@@ -294,11 +294,11 @@ const API_key = "your-api-key";
 
 ## 🌐 Hosting
 
-App is hosted via **vercel**
+App is hosted via **Vercel**
 
 ##  Credits
 
 *  [OpenWeatherMap](https://openweathermap.org/)
-* 🌀[Locomotive Scroll](https://github.com/locomotivemtl/locomotive-scroll)
+* [Locomotive Scroll](https://github.com/locomotivemtl/locomotive-scroll)
 *  [GSAP](https://greensock.com/gsap/)
 *  Videos: [Pexels](https://pexels.com) & [Coverr](https://coverr.co)

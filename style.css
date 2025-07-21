@@ -30,9 +30,6 @@ html,
 body {
     width: auto;
     height: auto;
-    /*     background:url(overcastClouds.jpg);
-    background-size: cover;
-    background-repeat: no-repeat; */
 }
 
 body video {
@@ -461,13 +458,13 @@ section h5 {
     width: 65vw;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: brightness(1.1) blur(8px) url(#displacementFilter);
-    border-radius:  28px;
+    border-radius:  22px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     filter: drop-shadow(-8px -10px 46px #0000005f);
     position: absolute;
     z-index: 99999;
-    transform: translateY(68%);
+    transform: translateY(69%);
     padding: 10px 20px;
     display: none;
     flex-direction: column;
@@ -476,11 +473,12 @@ section h5 {
     overflow-y: auto;
     gap: 8px;
      list-style: none;
-    padding: 0 35px;
-    margin-top: 30px;
+    padding: 0 25px;
+    /* margin-top: 30px; */
 }
 
 #suggestions li {
+    border-bottom: .5px solid #dddddd7c;
     font-size: 0.6em;
     color: var(--txt1);
     text-align: left;
@@ -492,9 +490,8 @@ section h5 {
 
 #suggestions li:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 28px;
+    border-radius: 22px;
 }
-
 
 #intro{
     position: fixed;
