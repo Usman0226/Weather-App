@@ -3,7 +3,8 @@
 [![Status](https://img.shields.io/badge/status-active-brightgreen.svg)]()
 
 ## 🔗 Live Demo
- [Click here to try SkyCast](https://skycast-5a77zat5b-usman-gani-s-projects.vercel.app/)
+ [Click here to try SkyCast](https://skycast-usman-gani-s-projects.vercel.app/)
+ 
 
 > Hosted on **vercel** | Geolocation Support |  Dynamic Background Videos | Smart City Suggestions | 
 
