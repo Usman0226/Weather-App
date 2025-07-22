@@ -126,7 +126,7 @@ ol li {
     flex-direction: column;
     padding: 20px;
     /* background-color: var(--Night); */
-    background: rgb(0 0 0 / 16%);
+    background: rgba(0, 0, 0, 0.16);
     min-width: 350px;
     max-width: 800px;
     width: 80%;
@@ -191,7 +191,7 @@ ol li {
     height: 150px;
     align-self: center;
     /* background: rgba(255, 255, 255, 0.1); */
-    background: rgb(0 0 0 / 16%);
+    background: rgba(0, 0, 0, 0.16);
     padding: 20px;
     display: flex;
     align-items: center;
@@ -332,7 +332,7 @@ ol li {
     width: 50%;
     height: 220px;
     /* background-color: var(--Night); */
-    background: rgb(0 0 0 / 16%);
+    background: rgba(0, 0, 0, 0.16);
     padding: 20px 25px 10px 0;
     backdrop-filter: blur(10px);
     border-radius: 28px;
@@ -362,7 +362,7 @@ section h5 {
     /* min-width: 250px; */
     height: 220px;
     /* background-color: var(--Night); */
-    background: rgb(0 0 0 / 16%);
+    background: rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(10px);
     border-radius: 28px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -458,7 +458,7 @@ section h5 {
     width: 65vw;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: brightness(1.1) blur(8px) url(#displacementFilter);
-    border-radius:  22px;
+    border-radius: 22px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     filter: drop-shadow(-8px -10px 46px #0000005f);
@@ -472,7 +472,7 @@ section h5 {
     max-height: 200px;
     overflow-y: auto;
     gap: 8px;
-     list-style: none;
+    list-style: none;
     padding: 0 25px;
     /* margin-top: 30px; */
 }
@@ -493,7 +493,7 @@ section h5 {
     border-radius: 22px;
 }
 
-#intro{
+#intro {
     position: fixed;
     top: 0;
     background-color: #121212;
@@ -507,7 +507,6 @@ section h5 {
     gap: 3px;
 }
 
-#intro h3{
+#intro h3 {
     font-size: 2.5vh
-
 }

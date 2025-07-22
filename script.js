@@ -31,7 +31,7 @@ search.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
     let city = search.value;
     getSuggestions(city);
-    console.log(city);
+    // console.log(city);
     getweather(city);
   }
 });
@@ -226,7 +226,7 @@ const getAQIndex = async (lat, lon) => {
 
 function UpdateProgressbar(val) {
   const slidebar = document.querySelector("#slider");
-  slidebar.disable;
+  slidebar.disabled = true;
   slidebar.value = val;
 }
 
@@ -234,6 +234,9 @@ const srchbr = document.getElementById("sbar");
 
 srchbr.addEventListener("click", () => {
   srchbr.classList.toggle("active");
+  setTimeout(()=>{
+    srchbr.classList.remove("active");
+  },3000)
 });
 
 window.addEventListener("load", () => {
@@ -256,7 +259,7 @@ window.addEventListener("load", () => {
     );
   } else {
     alert("Geolocation is not supported by this browser");
-    console.log("Geolocation is not supported by this browser.");
+    // console.log("Geolocation is not supported by this browser.");
   }
 });
 
@@ -313,12 +316,10 @@ function displaySuggestions(cities) {
   });
 }
 
-document.addEventListener("click", () => {
-  setTimeout(() => {
+setTimeout(() => {
     suggestions.style.display = "none";
     suggestions.innerHTML = "";
-  }, 500);
-});
+  }, 3000);
 
 if (search.value == "") {
   suggestions.style.display = "none";
@@ -399,3 +400,10 @@ sync.to("#intro", {
     intro.style.display = "none";
   },
 });
+
+
+window.addEventListener('click',()=>{
+    setTimeout(()=>{
+      suggestions.style.display = "none"
+    },1000)
+})
