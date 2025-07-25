@@ -28,6 +28,7 @@
 
 html,
 body {
+    top: 0;
     width: auto;
     height: auto;
 }
@@ -49,6 +50,7 @@ header {
 #city {
     font-size: 0.9em !important;
     margin-top: 20px;
+    animation: moveText 3s ease-in-out 3;
 }
 
 header .temp {
@@ -279,7 +281,7 @@ ol li {
 }
 
 .search {
-    z-index: 99999;
+  z-index: 99999;
     display: flex;
     /* flex-direction:column; */
     justify-content: center;
@@ -474,7 +476,18 @@ section h5 {
     gap: 8px;
     list-style: none;
     padding: 0 25px;
-    /* margin-top: 30px; */
+    margin-top: 30px !important;
+    transition: background 1s ease-in;
+}
+
+
+@keyframes moveText {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px); /* move up slightly */
+  }
 }
 
 #suggestions li {

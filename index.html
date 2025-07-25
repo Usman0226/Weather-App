@@ -12,7 +12,7 @@
 </head>
 
 <body>
-     <video src="sunn.mp4" autoplay muted loop playsinline style="
+     <video id="bg" src="sunn.mp4" autoplay muted loop playsinline style="
             position : fixed ;
             top :0;
             left : 0;
@@ -22,6 +22,8 @@
             z-index :-1;
             filter: brightness(0.88);
             object-fit: cover;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
         ">
         </video>
     <div id="intro" >
@@ -29,12 +31,12 @@
             <h3>Your</h3>
             <h3> Location...</h3>   
         </div>  
-    <div id="mainn">
+    <div id="mainn" data-scroll-container>
         
        
-        <div class="container" data-scroll-container>
+        <div class="container" data-scroll>
 
-            <header data-scroll>
+            <header id="head" data-scroll>
 
                 <div id="sbar" class="search">
                     <i class="fa-solid fa-magnifying-glass"></i>

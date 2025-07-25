@@ -72,7 +72,7 @@ const getweather = async (city) => {
   } catch (error) {
     setTimeout(() => {
       alert("Invalid City Name !");
-    }, 2650);
+    }, 3600);
   }
 };
 
@@ -172,7 +172,7 @@ const hourlyForecast = async (city) => {
 
   //Weekly Forecast Data fill-up
   const weekList = hourForecast.list; // weekList => array of the list
-  console.log(weekList);
+  // console.log(weekList);
   for (let i = 4; i < weekList.length; i += 8) {
     //day extraction
     const dt = weekList[i].dt;
@@ -234,13 +234,13 @@ const srchbr = document.getElementById("sbar");
 
 srchbr.addEventListener("click", () => {
   srchbr.classList.toggle("active");
-  setTimeout(()=>{
+  setTimeout(() => {
     srchbr.classList.remove("active");
-  },3000)
+  }, 3000);
 });
 
-window.addEventListener("load", () => {
-  if ("geolocation" in navigator) {
+async function getLocation(){
+    if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       async function (position) {
         const lat = position.coords.latitude;
@@ -248,8 +248,10 @@ window.addEventListener("load", () => {
 
         const city = await getcity(lat, lon);
         getweather(city);
+       
       },
       function (error) {
+        alert("Failed to fetch Location !");
         console.error("Error getting location:", error.message);
       },
       {
@@ -259,8 +261,14 @@ window.addEventListener("load", () => {
     );
   } else {
     alert("Geolocation is not supported by this browser");
-    // console.log("Geolocation is not supported by this browser.");
   }
+  
+}
+
+window.addEventListener("load", async() => {
+  await getLocation();
+  introAnimation();
+  homeAnimation();
 });
 
 const scroll = new LocomotiveScroll({
@@ -317,9 +325,9 @@ function displaySuggestions(cities) {
 }
 
 setTimeout(() => {
-    suggestions.style.display = "none";
-    suggestions.innerHTML = "";
-  }, 3000);
+  suggestions.style.display = "none";
+  suggestions.innerHTML = "";
+}, 3000);
 
 if (search.value == "") {
   suggestions.style.display = "none";
@@ -376,34 +384,54 @@ ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 ScrollTrigger.refresh();
 
 // Intro
-
-let sync = gsap.timeline();
-const intro = document.querySelector("#intro");
-
-setTimeout(() => {
-  intro.style.display = "none";
-}, 2500);
-
-sync.from("#intro h3", {
-  y: 40,
-  opacity: 0,
-  duration: 1.5,
-  stagger: 0.2,
-});
-
-sync.to("#intro", {
-  opacity: 0,
-  y: -10,
-  duration: 1,
-  stagger: 0.1,
-  onComplete: () => {
+function introAnimation() {
+  let sync = gsap.timeline();
+  const intro = document.querySelector("#intro");
+  const header = document.querySelector('#head');
+  setTimeout(() => {
     intro.style.display = "none";
-  },
+  }, 2500);
+
+  sync.from("#intro h3", {
+    y: 40,
+    opacity: 0,
+    duration: 1.5,
+    stagger: 0.4,
+  });
+
+  sync.to("#intro", {
+    opacity: 0,
+    y: -10,
+    duration: 1.5,
+    stagger: 0.3,
+    onComplete: () => {
+      intro.style.display = "none";
+    },
+  });
+
+}
+
+
+function homeAnimation(){
+    let sync = gsap.timeline();
+  sync.from("header,header h1, header .temp, header .Info", {
+  y: -25,
+  duration: 1.55,
+  stagger: 0.4,
+  opacity: 0,
+});
+  sync.from("#mainn,.weekly", {
+  y: -25,
+  duration: 1.55,
+  stagger: 0.4,
+  opacity: 0,
+});
+
+}
+window.addEventListener("click", () => {
+  setTimeout(() => {
+    suggestions.style.display = "none";
+  }, 1000);
 });
 
 
-window.addEventListener('click',()=>{
-    setTimeout(()=>{
-      suggestions.style.display = "none"
-    },1000)
-})
