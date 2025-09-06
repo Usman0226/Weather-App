@@ -35,6 +35,7 @@ body {
 
 body video {
     position: fixed;
+    pointer-events : none; 
 }
 
 header {
